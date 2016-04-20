@@ -1,0 +1,4 @@
+Options +FollowSymLinks
+RewriteEngine on
+RewriteRule sneaker/([0-9]+)/(.*)/ sneaker.php?id=$1
+RewriteRule sneaker/([0-9]+)/(.*) sneaker.php?id=$1
