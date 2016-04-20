@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="en"> 
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<meta name="viewport" content="initial-scale=1.0, width=device-width, minimal-ui" />		
+	<title>All The Sneakers</title>
+	<script type="text/javascript" src="common/jquery/jquery-1.8.2.min.js"></script>
+	<script type="text/javascript" src="common/jquery/jquery.infinitescroll.min.js"></script>
+	<script type="text/javascript" src="js/search.js"></script>
+	<link rel="stylesheet" type="text/css" href="styles/general.css" />
+<!--	<link href='http://fonts.googleapis.com/css?family=Roboto+Slab:300' rel='stylesheet' type='text/css'> -->
+	<link href='https://fonts.googleapis.com/css?family=Lato:400,100,300' rel='stylesheet' type='text/css'>
+	<link rel="apple-touch-icon" sizes="57x57" href="/images/ios-icons/apple-icon-57x57.png">
+	<link rel="apple-touch-icon" sizes="60x60" href="/images/ios-icons/apple-icon-60x60.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="/images/ios-icons/apple-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="76x76" href="/images/ios-icons/apple-icon-76x76.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="/images/ios-icons/apple-icon-114x114.png">
+	<link rel="apple-touch-icon" sizes="120x120" href="/images/ios-icons/apple-icon-120x120.png">
+	<link rel="apple-touch-icon" sizes="144x144" href="/images/ios-icons/apple-icon-144x144.png">
+	<link rel="apple-touch-icon" sizes="152x152" href="/images/ios-icons/apple-icon-152x152.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="/images/ios-icons/apple-icon-180x180.png">
+	<link rel="icon" type="image/png" sizes="192x192"  href="/images/ios-icons/android-icon-192x192.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/images/ios-icons/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="96x96" href="/images/ios-icons/favicon-96x96.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/images/ios-icons/favicon-16x16.png">
+	<link rel="manifest" href="/manifest.json">
+	<meta name="msapplication-TileColor" content="#ffffff">
+	<meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+	<meta name="theme-color" content="#ffffff">
+
+<script>
+
+// Google Analytics
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-56778069-1', 'auto');
+ga('send', 'pageview');
+// end GA
+
+var bFilters=[];
+var cFilters=[];
+var gFilters=[];
+var mFilters=[];
+
+// get search parameters from URL
+var search = getUrlParameter('search');
+var searchB = getUrlParameter('searchB');
+var searchI = getUrlParameter('searchI');
+var searchN = getUrlParameter('searchN');
+var term = getUrlParameter('term');
+
+var searchStr = "";
+
+// get order parameters from URL 
+var order = getUrlParameter('order');
+
+// ensure document is loaded before attempting any jQuery
+$(function(){
+	showIntro=1;
+	// resize intro on window resize
+	$(window).resize(function(){
+		introHeight();
+	});
+	// populate the search field with the current search term if one exists and update the search string for the header
+	if(search){
+		searchDisplay = decodeURIComponent((search + '').replace(/\+/g, '%20'));
+		$("#searchField").val(searchDisplay);
+		searchStr = ' <a href="/">"'+searchDisplay+'" search</a>';
+		$("#searchImg").attr("src","/images/search-on.png");
+	}else if(searchI){
+		$("#searchField").val(term);
+		searchStr = ' <a href="/">matching search</a>';
+		$("#searchImg").attr("src","/images/search-on.png");
+	}else if(searchN){
+		$("#searchField").val(term);
+		searchStr = ' <a href="/">matching search</a>';
+		$("#searchImg").attr("src","/images/search-on.png");
+	}
+	$("#searchString").html(searchStr);
+	adjustHeader();
+	// add toggle functionality to filter icon
+	$("#filter").click(function(){
+		$("#filters").slideToggle();
+	});
+	// add toggle functionality to search icon
+	$("#search").click(function(){
+		$("#searchbar").slideToggle();
+	});
+	loadSneakers(1);
+	loadFilters(false);
+	$('#content').infinitescroll({
+		navSelector  : '#page-nav',    // selector for the paged navigation 
+		nextSelector : '#page-nav a',  // selector for the NEXT link (to page 2)
+		itemSelector : '.shoe',     // selector for all items you'll retrieve
+		path: function(index) { 
+			return "sneakers.php?p=" + index + "&b="+brandStr+ "&c="+colourStr+ "&g="+genderStr+ "&m="+modelStr+ "&search="+search+"&searchI="+searchI+"&searchN="+searchN+"&order="+order;
+		},
+		loading: {
+			finished: updateLocalData,
+			finishedMsg: "You've seen all the sneakers.",
+			img: "/images/loading.gif",
+//			msg: null,
+			msgText: "",
+			selector: null,
+			speed: 'fast',
+			start: undefined
+		},
+ 	});
+// 	<div id="infscr-loading" style="">
+//	<img alt="Loading..." src="">
+//	<div>Loading more sneakers...</div>
+//	</div>
+	$("#searchField").keyup(function(e){
+		var q = $("#searchField").val();
+		if(q.length>=3){
+			("#searchTermResults").load("/api/searchTerms.php?q="+q,function(responseTxt,statusTxt,xhr){
+				if(statusTxt=="success"){
+//					alert("External content loaded successfully!");
+					$("#searchResultsHolder").show();
+				}
+				if(statusTxt=="error"){
+//					alert("Error: "+xhr.status+": "+xhr.statusText);
+					$("#searchResultsHolder").hide();
+				}
+			});
+		}else{
+			$("#searchResultsHolder").hide();
+		}
+	});
+});
+
+// gets GET parameters from URL 
+function getUrlParameter(sParam)
+{
+    var sPageURL = window.location.search.substring(1);
+    var sURLVariables = sPageURL.split('&');
+    for (var i = 0; i < sURLVariables.length; i++) 
+    {
+        var sParameterName = sURLVariables[i].split('=');
+        if (sParameterName[0] == sParam) 
+        {
+            return sParameterName[1];
+        }
+    }
+}
+
+// adjusts y value of content as header changes height 
+function adjustHeader(){
+	var headerHeight = 40 + $('#headerBar').height();
+	$('#content').css({'margin-top': headerHeight});
+}
+
+function loadFilters(allB){
+	bFile = "config/brandFilters.php";
+	$("#brandFilters").load(bFile,function(responseTxt,statusTxt,xhr){
+		if(statusTxt=="success")
+		$(":checkbox").change(function(){
+			refreshFilterStr();
+		});
+//		alert("External content loaded successfully!");
+		if(searchB){
+			$('#b_'+searchB).prop('checked', true);
+			refreshFilterStr();
+		}
+		if(statusTxt=="error")
+		alert("Error: "+xhr.status+": "+xhr.statusText);
+	});
+	cFile = "config/colourFiltersAll.html";
+	$("#colourFilters").load(cFile,function(responseTxt,statusTxt,xhr){
+		if(statusTxt=="success")
+		$(":checkbox").change(function(){
+			refreshFilterStr();
+		});
+//		alert("External content loaded successfully!");
+		if(statusTxt=="error")
+		alert("Error: "+xhr.status+": "+xhr.statusText);
+	});
+	mFile = "config/modelFilters.php";
+	$("#modelFilters").load(mFile,function(responseTxt,statusTxt,xhr){
+		if(statusTxt=="success")
+		$(":checkbox").change(function(){
+			refreshFilterStr();
+		});
+//		alert("External content loaded successfully!");
+		if(statusTxt=="error")
+		alert("Error: "+xhr.status+": "+xhr.statusText);
+	});
+}
+
+function toggleBrandFilters(){
+	if($(".brand2").css( "display")=="none"){
+		$(".brand2").css( "display", "block" );
+		$("#brandToggleLink").text('show popular');
+	}else{
+		$(".brand2").css( "display", "none" );
+		$("#brandToggleLink").text('show all');
+	}
+}
+
+
+function loadSneakers(pageID){
+	$('#content').infinitescroll({
+		state: {
+			isDone: false, // For when it goes all the way through the archive.
+			isPaused: false,
+			currPage: 1
+		}
+	});
+	brandStr="";
+	for(i=0;i<bFilters.length;i++){
+		brandStr+=bFilters[i];
+		brandStr+=",";
+	}
+	colourStr="";
+	for(i=0;i<cFilters.length;i++){
+		colourStr+=cFilters[i];
+		colourStr+=",";
+	}
+	genderStr="";
+	for(i=0;i<gFilters.length;i++){
+		genderStr+=gFilters[i];
+		genderStr+=",";
+	}
+	modelStr="";
+	for(i=0;i<mFilters.length;i++){
+		modelStr+=mFilters[i];
+		modelStr+=",";
+	}
+	sneakersURL="sneakers.php?intro="+showIntro+"&p="+pageID+"&b="+brandStr+"&c="+colourStr+"&g="+genderStr+"&m="+modelStr+"&search="+search+"&searchB="+searchB+"&searchI="+searchI+"&searchN="+searchN+"&order="+order;
+	console.log(sneakersURL);
+	$("#content").load(sneakersURL,function(responseTxt,statusTxt,xhr){
+		if(statusTxt=="success"){
+			introHeight();
+			showIntro=0;
+			$('a[class=quickLink]').click(function(){
+				linkSplit=$(this).attr('id').split("_");
+				modelID = linkSplit[1];
+				$('#m_'+modelID).prop('checked', true);
+				refreshFilterStr();
+			});
+			updateLocalData();
+		}
+// alert("External content loaded successfully!");
+		if(statusTxt=="error")
+		alert("Error: "+xhr.status+": "+xhr.statusText);
+	});
+}
+
+//change height of intro
+function introHeight() {
+	shoeImgHeight=0.8*$('#content').children('.shoe').first().width();
+	shoeDetailsHeight=$('.shoeDetails').first().height();
+	if($(window).width()>800){
+		$('#introBox').height(2*(shoeImgHeight+shoeDetailsHeight)+24);
+	}else{
+		$('#introBox').css('height', 'auto');
+	}
+}
+function updateLocalData(){
+	$("#infscr-loading").hide();
+	if(typeof(Storage) !== "undefined") {
+		idStr="";
+		$( ".shoe" ).each(function( index ) {
+			idStr+=$( this ).attr('id')+"/";
+		});
+		localStorage.productsList = idStr;
+	}
+}
+
+function refreshFilterStr(){
+	filtersApplied=false;
+	filterStr='';
+	bFilters.length=0;
+	cFilters.length=0;
+	gFilters.length=0;
+	mFilters.length=0;
+    $(":checkbox").each(function(){
+		if ($(this).is(':checked')) {
+			filtersApplied=true;
+			filterStr+=' <a href="#" id="';
+			filterStr+=$(this).attr('id');
+			filterStr+='">';
+			filterStr+=$(this).parent().text();
+			filterStr+='</a>,';
+			fillSplit=$(this).attr('id').split("_");
+			if(fillSplit[0]=="b"){
+				bFilters.push(fillSplit[1]);
+			}
+			if(fillSplit[0]=="c"){
+				cFilters.push(fillSplit[1]);
+			}
+			if(fillSplit[0]=="g"){
+				gFilters.push(fillSplit[1]);
+			}
+			if(fillSplit[0]=="m"){
+				mFilters.push(fillSplit[1]);
+			}
+		}
+    });
+	filterStr=filterStr.slice(0,-1);
+	$("#filterString").html(filterStr);
+	$("#filterString a").click(function(){
+		filterID=$(this).attr('id');
+		$('input[id="'+ filterID + '"]').prop('checked', false);
+		refreshFilterStr();
+	});
+	if(filtersApplied){
+		$("#filterImg").attr("src","/images/filter-on.png");
+	}else{
+		$("#filterImg").attr("src","/images/filter.png");
+	}
+	adjustHeader();
+	loadSneakers(1);
+}
+
+</script>	
+</head>
+<body>
+<div class="header">
+	<div id="headerBar">
+			<div id="search"><img id="searchImg" src="images/search.png" width="17" height="17" /></div>
+			<div id="filter"><img id="filterImg" src="images/filter.png" width="17" height="17" /></div>
+			<a href="/"><img class="logo" src="images/all-the-sneakers.png" /></a><h1>All the<span id="filterString"></span><span id="searchString"></span> sneakers...</h1>
+	</div>
+	<div id="searchbar">
+		<form id="searchForm" action="/" method="GET">
+			<input type="search" name="search" id="searchField" placeholder="Search..." />
+		</form>
+	</div>
+	<div id="searchResultsHolder">
+		<div id="searchTermResults"></div>
+	</div>
+	<div id="filters">
+		<span id="brandFilters">
+		</span>
+		<span id="modelFilters">
+		</span>
+		<span id="colourFilters">
+		</span>
+	</div>
+</div>
+<div id="content">
+	<div class="shoe"></div>
+</div>
+<nav id="page-nav">
+  <a href="sneakers.php?p=2"></a>
+</nav>
+</body>
+</html>
