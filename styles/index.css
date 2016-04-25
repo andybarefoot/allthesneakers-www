@@ -1,0 +1,499 @@
+/* apply a natural box layout model to all elements, but allowing components to change */
+html {
+  box-sizing: border-box; }
+
+*, *:before, *:after {
+  box-sizing: inherit; }
+
+.shadow, header, card-intro {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.27); }
+
+.highlight, header, card-intro, #nav, #headerBarStandalone {
+  color: #fff;
+  background-color: #000; }
+
+header {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  bottom: auto; }
+
+card-intro {
+  float: left;
+  width: 492px;
+  margin: 0 0 20px 20px;
+  padding: 20px; }
+  @media screen and (max-width: 1800px) {
+    card-intro {
+      width: 41.66667%;
+      margin: 0 0 15px 0.83333%; } }
+  @media screen and (max-width: 1500px) {
+    card-intro {
+      width: 48.5%;
+      margin: 0 0 15px 1%; } }
+  @media screen and (max-width: 1250px) {
+    card-intro {
+      width: 58.08%;
+      margin: 0 0 15px 1.2%; }
+      card-intro h3 {
+        font-size: 20px; } }
+  @media screen and (max-width: 1000px) {
+    card-intro {
+      width: 47.75%;
+      margin: 0 0 15px 1.5%; }
+      card-intro h3 {
+        font-size: 16px; } }
+  @media screen and (max-width: 800px) {
+    card-intro {
+      width: 96.25%;
+      margin: 0 0 15px 1.875%; }
+      card-intro #searchField {
+        font-size: 16px; } }
+  @media screen and (max-width: 600px) {
+    card-intro {
+      width: 95%;
+      margin: 0 0 15px 2.5%; } }
+  @media screen and (max-width: 440px) {
+    card-intro {
+      width: 93.18182%;
+      margin: 0 0 15px 3.40909%; } }
+
+card-shoe, #infscr-loading {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.27);
+  background-color: white;
+  float: left;
+  font-size: 12px;
+  width: 236px;
+  margin: 0 0 20px 20px; }
+  card-shoe .shoeName, #infscr-loading .shoeName {
+    color: #666666; }
+  card-shoe .shoeDetails, #infscr-loading .shoeDetails {
+    width: 90%;
+    height: 52px;
+    margin: auto;
+    background-color: white; }
+  card-shoe .shoeBrand, #infscr-loading .shoeBrand {
+    float: left; }
+  card-shoe .shoePrice, #infscr-loading .shoePrice {
+    float: right; }
+  @media screen and (max-width: 1800px) {
+    card-shoe, #infscr-loading {
+      width: 13.33333%;
+      margin: 0 0 15px 0.83333%;
+      font-size: 12px; } }
+  @media screen and (max-width: 1500px) {
+    card-shoe, #infscr-loading {
+      width: 15.5%;
+      margin: 0 0 15px 1%;
+      font-size: 12px; } }
+  @media screen and (max-width: 1250px) {
+    card-shoe, #infscr-loading {
+      width: 18.56%;
+      margin: 0 0 15px 1.2%;
+      font-size: 12px; } }
+  @media screen and (max-width: 1000px) {
+    card-shoe, #infscr-loading {
+      width: 23.125%;
+      margin: 0 0 15px 1.5%;
+      font-size: 12px; } }
+  @media screen and (max-width: 800px) {
+    card-shoe, #infscr-loading {
+      width: 30.83333%;
+      margin: 0 0 15px 1.875%; } }
+  @media screen and (max-width: 600px) {
+    card-shoe, #infscr-loading {
+      width: 30%;
+      margin: 0 0 15px 2.5%; } }
+  @media screen and (max-width: 440px) {
+    card-shoe, #infscr-loading {
+      width: 44.88636%;
+      margin: 0 0 15px 3.40909%; } }
+
+#infscr-loading div {
+  width: 90%;
+  height: 52px;
+  margin: auto;
+  background-color: white; }
+
+#nav {
+  font-size: 20px; }
+
+#nav-searchbar {
+  display: none;
+  background-color: black;
+  padding: 20px;
+  width: 100%;
+  text-align: center; }
+
+#headerBarStandalone {
+  font-size: 20px;
+  background-repeat: no-repeat;
+  background-position: 15px 0px;
+  display: none; }
+
+h1 {
+  margin: 10px 0 10px 15px;
+  font-size: 20px;
+  font-weight: 300; }
+  h1 .sneaker {
+    text-align: center; }
+  h1 a {
+    color: #FFFFFF;
+    text-decoration: none; }
+  h1 a {
+    color: #FFFFFF;
+    text-decoration: none; }
+  h1 #filterString a:hover, h1 #searchString a:hover {
+    text-decoration: line-through; }
+
+#headerBar a {
+  color: #FFFFFF;
+  text-decoration: none; }
+
+h1 a, #headerBar a:hover {
+  text-decoration: none; }
+
+h2 {
+  margin: 0 10px 0 0;
+  font-size: 16px;
+  font-weight: 300; }
+  @media screen and (min-width: 600px) {
+    h2 {
+      font-size: 20px; } }
+
+h3 {
+  margin: 0 10px 20px 0;
+  font-size: 20px;
+  font-weight: 300; }
+
+h4 {
+  background-color: white;
+  padding: 10px;
+  margin: 10px 2.666666666% 10px 2.666666666%;
+  font-size: 20px;
+  font-weight: 300; }
+
+h5 {
+  padding: 0;
+  margin: 10px 0 0 0;
+  font-size: 0.8em;
+  color: #666; }
+
+p {
+  margin: 0 10px 20px 0;
+  font-weight: 300;
+  line-height: 20px; }
+
+p a {
+  color: #000000; }
+
+img {
+  max-width: 100%; }
+
+body {
+  margin: 0;
+  font-family: "Lato", serif;
+  font-weight: 300;
+  background-color: #FFFFFF;
+  color: #333333;
+  background-image: url("/images/backgrounds/tread.png"); }
+
+#logo {
+  float: left;
+  margin: 0 10px 0 10px;
+  display: none; }
+
+#filterImg {
+  margin: 2px 20px 0 0;
+  float: right; }
+
+nav-filters {
+  margin: -5px 20px 0 0;
+  float: right;
+  display: none;
+  background-color: black; }
+  nav-filters a {
+    color: #FFFFFF; }
+  nav-filters ul {
+    list-style-type: none;
+    float: left;
+    margin-left: -30px;
+    margin-right: 20px; }
+
+#modelFilters {
+  display: none; }
+
+.subHeader {
+  padding-top: 10px; }
+
+.brand2 {
+  display: none; }
+
+#searchImg {
+  margin: 2px 20px 0 0;
+  float: right; }
+
+#searchField {
+  font-family: "Lato", serif;
+  width: 100%;
+  height: 40px;
+  margin: 20px 0 20px 0;
+  padding: 10px 5px;
+  border: 0;
+  background: #fff;
+  border-radius: 10px;
+  font-size: 100%; }
+
+#searchResultsHolder {
+  display: none;
+  background-color: black;
+  width: 100%; }
+
+#searchTermResults {
+  font-family: "Lato", serif;
+  width: 88%;
+  margin: auto;
+  margin-bottom: 20px;
+  padding: 10px 1%;
+  border: 0;
+  background: #FFFFFF;
+  border-radius: 10px;
+  font-size: 100%; }
+
+#searchTermResults a {
+  font-size: 0.85em;
+  color: black;
+  margin-right: 20px; }
+
+#longerResults {
+  display: none; }
+
+grid-products {
+  display: block;
+  margin-top: 60px; }
+
+#loading {
+  width: 100%;
+  height: 30px;
+  text-align: center;
+  background-color: #000000;
+  color: #FFFFFF;
+  clear: both; }
+
+#nextShoe {
+  margin: 0 10px 0 10px;
+  float: right; }
+
+#prevShoe {
+  margin: 0 10px 0 10px;
+  float: right; }
+
+#backText2 {
+  display: none; }
+
+#nextText {
+  display: none;
+  line-height: 24px; }
+
+#nameText {
+  display: none;
+  line-height: 24px; }
+
+#idText {
+  display: none; }
+
+#sneaker {
+  margin: 60px 0 0 0;
+  height: 1000px; }
+
+#sneakerImage {
+  margin: 0 2.666666666% 0 2.666666666%; }
+
+#sneakerImage img {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.27); }
+
+#sneaker .buyLink {
+  display: block;
+  width: 200px;
+  background: #000000;
+  padding: 10px;
+  text-align: left;
+  color: white;
+  text-decoration: none; }
+
+#sneaker ul {
+  list-style-type: none;
+  float: right; }
+
+#sneaker li {
+  margin-top: 10px; }
+
+#sneakerDetails {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.27);
+  background-color: white;
+  margin: 10px 2.666666666% 0 2.666666666%;
+  padding: 10px;
+  overflow: auto; }
+
+#sneakerDetails p {
+  margin-bottom: 10px; }
+
+#relatedSneakers {
+  clear: both; }
+
+#relatedSneakers h4 {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.27); }
+
+#introLinks {
+  display: none; }
+
+#noResults {
+  height: 150px;
+  padding: 20px;
+  font-size: 20px;
+  text-align: center; }
+
+#welcome {
+  width: 94.8%;
+  margin: auto;
+  background-color: #000000;
+  color: #ffffff;
+  padding: 20px; }
+
+/* 
+440 BREAK POINT
+*/
+@media screen and (min-width: 440px) {
+  .related9 {
+    display: none; } }
+/* 
+600 BREAK POINT
+*/
+@media screen and (min-width: 600px) {
+  h1 {
+    /*		text-indent: 65px; */ }
+
+  nav, #headerBarStandalone {
+    /*	   background-image:url('/images/outline.png'); */ }
+
+  #nameText {
+    display: inline; }
+
+  #backText1 {
+    display: none; }
+
+  #backText2 {
+    display: inline; }
+
+  #logo {
+    display: inline; }
+
+  #modelFilters {
+    display: initial; }
+
+  #introLinks {
+    display: block;
+    margin: 0 0 10px 0; }
+
+  #introLinks p {
+    margin-top: 10px;
+    margin-bottom: 5px;
+    color: white; }
+
+  #introLinks p a {
+    margin-left: 10px;
+    color: white;
+    cursor: pointer;
+    text-decoration: underline; } }
+/* 
+800 BREAK POINT
+*/
+@media screen and (min-width: 800px) {
+  #nextText {
+    display: inline; }
+
+  h4 {
+    margin: 20px 2% 20px 2%; }
+
+  #sneakerImage {
+    float: right;
+    width: 60%;
+    margin: 0 2% 20px 0; }
+
+  #sneakerDetails {
+    width: 31%;
+    margin: 0 0 0 2%; }
+
+  .related8, .related9 {
+    display: none; }
+
+  #longerResults {
+    display: inline; }
+
+  #introLinks p {
+    font-size: 14px;
+    margin-top: 5px; } }
+/* 
+1000 BREAK POINT
+*/
+@media screen and (min-width: 1000px) {
+  grid-products, #sneaker {
+    margin-top: 70px; }
+
+  #idText {
+    display: inline; }
+
+  #sneakerImage {
+    float: right;
+    width: 50%;
+    margin: 0 2% 20px 0; }
+
+  #sneakerDetails {
+    width: 43%;
+    margin: 0 0 0 2%; }
+
+  .related8, .related9 {
+    display: block; }
+
+  #introLinks p {
+    font-size: 16px;
+    margin-top: 10px; } }
+/* 
+1250 BREAK POINT
+*/
+@media screen and (min-width: 1250px) {
+  #sneakerImage {
+    margin: 0 1.6% 20px 0; }
+
+  #sneakerDetails {
+    margin: 0 0 0 1.6%; }
+
+  h4 {
+    margin: 20px 1.6% 20px 1.6%; } }
+/* 
+1500 BREAK POINT
+*/
+@media screen and (min-width: 1500px) {
+  #sneakerImage {
+    margin: 0 1.3333333% 20px 0; }
+
+  #sneakerDetails {
+    margin: 0 0 0 1.3333333%; }
+
+  h4 {
+    margin: 20px 1.3333333% 20px 1.3333333%; } }
+/* 
+1800 BREAK POINT
+*/
+@media screen and (min-width: 1800px) {
+  #sneakerImage {
+    margin: 0 20px 20px 0; }
+
+  #sneakerDetails {
+    margin: 0 0 0 20px;
+    width: 45%; }
+
+  h4 {
+    margin: 20px 20px 20px 20px; } }
+
+/*# sourceMappingURL=index.css.map */

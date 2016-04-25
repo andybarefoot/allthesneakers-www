@@ -1,0 +1,80 @@
+
+h1{
+	margin: 10px 0 10px 15px;
+	font-size: 20px;
+	font-weight: 300;
+	.sneaker{
+	    text-align: center;
+	}
+	a{
+		color: #FFFFFF;
+		text-decoration: none; 
+	}
+	#filterString a:hover, #searchString a:hover{
+	    text-decoration: line-through;
+	}
+}
+
+#headerBar a {
+	color: #FFFFFF;
+	text-decoration: none; 
+}
+
+h1 a, #headerBar a:hover{
+    text-decoration: underline;
+}
+
+h2{
+	margin: 0 10px 0 0;
+	font-size: 16px;
+	font-weight: 300;
+	@media screen and (min-width: 440px){	
+	}	
+	@media screen and (min-width: 600px){	
+		font-size: 20px;
+	}	
+	@media screen and (min-width: 800px){	
+	}	
+	@media screen and (min-width: 1000px){	
+	}
+	@media screen and (min-width: 1250px){	
+	}	
+	@media screen and (min-width: 1500px){	
+	}	
+	@media screen and (min-width: 1800px){	
+	}	
+
+}
+
+h3{
+	margin: 0 10px 20px 0;
+	font-size: 20px;
+	font-weight: 300;
+}
+
+h4{
+	background-color: white;
+	padding: 10px;
+	margin: 10px 2.666666666% 10px 2.666666666%;
+	font-size: 20px;
+	font-weight: 300;
+}
+
+h5{
+	padding: 0;
+	margin: 10px 0 0 0;
+	font-size: 0.8em;
+	color: #666;
+}
+
+p{
+	margin: 0 10px 20px 0;
+	font-weight: 300;
+	line-height: 20px;
+}
+p a{
+	color: #000000;
+}
+
+
+

@@ -172,14 +172,13 @@ $models=getData($sqlQuery);
 // add introbox
 if($introNo==1){
 ?>
-<div id="introBox">
-	<div id="introContent">
-		<h2>...a search engine of sneaker sites.</h2>
-		<form id="searchForm" action="/" method="GET">
-			<input type="search" name="search" id="searchField" placeholder="Search..." />
-		</form>
-		<div id="introLinks">
-			<h3>Popular Models:</h3>
+<card-intro>
+	<h2>...a search engine of sneaker sites.</h2>
+	<form id="searchForm" action="/" method="GET">
+		<input type="search" name="search" id="searchField" placeholder="Search..." />
+	</form>
+	<div id="introLinks">
+		<h3>Popular Models:</h3>
 <?
 $thisID=0;
 foreach ($models as $model) {
@@ -198,9 +197,8 @@ foreach ($models as $model) {
 }
 		echo '</p>';
 ?>
-		</div>
 	</div>
-</div>
+</card-intro>
 <?
 }
 
@@ -213,15 +211,15 @@ for($i=0;$i<count($shoes);$i++){
 	while(strlen($sneakerName)>50){
 		$sneakerName=substr($sneakerName,0,strrpos($sneakerName,' ')).'...';
 	}
-	echo '<div class="shoe" id="'.$shoes[$i]['shoeID'].'">';
-	echo '<a class="fancybox fancybox.ajax" rel="group" href="/sneaker/'.$shoes[$i]['shoeID'].'/'.$urlBrandName.'/'.$urlProductName.'"><img alt="'.$shoes[$i]['brandName'].': '.preg_replace("/[^A-Za-z0-9 ]/", '', $sneakerName).'" src="'.$shoes[$i]['shoeThumb'].'"></a>';
+	echo '<card-shoe id="'.$shoes[$i]['shoeID'].'">';
+	echo '<a href="/sneaker/'.$shoes[$i]['shoeID'].'/'.$urlBrandName.'/'.$urlProductName.'"><img alt="'.$shoes[$i]['brandName'].': '.preg_replace("/[^A-Za-z0-9 ]/", '', $sneakerName).'" src="'.$shoes[$i]['shoeThumb'].'"></a>';
 	echo '<div class="shoeDetails"><span class="shoeName">'.$sneakerName.'</span><br/>';
 	echo '<span class="shoeBrand">'.$shoes[$i]['brandName'].'</span>';
 	echo '<span class="shoePrice">$'.$shoes[$i]['productPrice'].'</span>';
-	echo '</div></div>';
+	echo '</div></card-shoe>';
 }
 
 if((count($shoes)==0)&&($pageNo==1)){
-	echo '<div class="shoe"><div id="noResults">NO MATCHING SNEAKERS FOUND</div></div>';
+	echo '<card-shoe><div id="noResults">NO MATCHING SNEAKERS FOUND</div></card-shoe >';
 }
 ?>

@@ -1,0 +1,171 @@
+$maxColumnGutter: 15px;
+
+@function get-column-width($totalColNo, $elementColWidth, $totalMaxWidth){
+	$columnWidth: ($totalMaxWidth - (($totalColNo + 1) * $maxColumnGutter))/$totalColNo;
+	@return 100% * (($elementColWidth * $columnWidth) + (($elementColWidth - 1) * $maxColumnGutter)) / $totalMaxWidth;
+}
+
+@function get-gutter-width($totalMaxWidth){
+	@return 100% * ($maxColumnGutter / $totalMaxWidth);
+}
+
+
+.shadow{
+	box-shadow: 0 0 10px rgba(0,0,0,0.27);
+}
+
+.highlight{
+	color: $highlightTextColor;
+	background-color: $highlightColor;
+}
+
+
+
+
+
+
+header {
+	@extend .shadow;
+	@extend .highlight;
+	width: 100%;
+    position: fixed;
+    top: 0;
+    bottom: auto;
+}
+
+card-intro{
+	@extend .shadow;
+	@extend .highlight;
+	float: left;
+	width: 492px;
+	margin: 0 0 20px 20px;
+	padding: 20px;
+	@media screen and (max-width: 1800px){	
+		width: get-column-width(7, 3, 1800px);
+		margin: 0 0 15px get-gutter-width(1800px);
+	}	
+	@media screen and (max-width: 1500px){	
+		width: get-column-width(6, 3, 1500px);
+		margin: 0 0 15px get-gutter-width(1500px);
+	}	
+	@media screen and (max-width: 1250px){	
+		width: get-column-width(5, 3, 1250px);
+		margin: 0 0 15px get-gutter-width(1250px);
+		h3{
+			font-size: 20px;
+		}
+	}	
+	@media screen and (max-width: 1000px){	
+		width: get-column-width(4, 2, 1000px);
+		margin: 0 0 15px get-gutter-width(1000px);
+		h3{
+			font-size: 16px;
+		}
+	}	
+	@media screen and (max-width: 800px){	
+		width: get-column-width(3, 3, 800px);
+		margin: 0 0 15px get-gutter-width(800px);
+		#searchField {
+			font-size: 16px;
+		}
+	}	
+	@media screen and (max-width: 600px){	
+		width: get-column-width(3, 3, 600px);
+		margin: 0 0 15px get-gutter-width(600px);
+	}	
+	@media screen and (max-width: 440px){	
+		width: get-column-width(3, 3, 440px);
+		margin: 0 0 15px get-gutter-width(440px);
+	}	
+}
+
+card-shoe{
+	box-shadow: 0 0 10px rgba(0,0,0,0.27);
+	background-color: white;
+	float: left;
+	font-size: 12px;
+	width: 236px;
+	margin: 0 0 20px 20px;
+	.shoeName{
+		color: #666666;
+	}
+	.shoeDetails{
+		width: 90%;
+		height: 52px;
+		margin: auto;
+		background-color: white;
+	}
+	.shoeBrand{
+		float:left;
+	}
+	.shoePrice{
+		float:right;
+	}
+	@media screen and (max-width: 1800px){	
+		width: get-column-width(7, 1, 1800px);
+		margin: 0 0 15px get-gutter-width(1800px);
+		font-size: 12px;
+	}	
+	@media screen and (max-width: 1500px){	
+		width: get-column-width(6, 1, 1500px);
+		margin: 0 0 15px get-gutter-width(1500px);
+		font-size: 12px;
+	}	
+	@media screen and (max-width: 1250px){	
+		width: get-column-width(5, 1, 1250px);
+		margin: 0 0 15px get-gutter-width(1250px);
+		font-size: 12px;
+	}	
+	@media screen and (max-width: 1000px){	
+		width: get-column-width(4, 1, 1000px);
+		margin: 0 0 15px get-gutter-width(1000px);
+		font-size: 12px;
+	}	
+	@media screen and (max-width: 800px){	
+		width: get-column-width(3, 1, 800px);
+		margin: 0 0 15px get-gutter-width(800px);
+	}	
+	@media screen and (max-width: 600px){	
+		width: get-column-width(3, 1, 600px);
+		margin: 0 0 15px get-gutter-width(600px);
+	}	
+	@media screen and (max-width: 440px){	
+		width: get-column-width(2, 1, 440px);
+		margin: 0 0 15px get-gutter-width(440px);
+	}	
+}
+
+#infscr-loading{
+	@extend card-shoe;
+	div{
+		width: 90%;
+		height: 52px;
+		margin: auto;
+		background-color: white;
+	}
+}
+
+
+
+
+#nav{
+	font-size: 20px;
+	@extend .highlight;
+}
+
+#nav-searchbar {
+	display: none;
+    background-color: black;
+    padding: 20px;
+    width:100%;
+	text-align: center;
+}
+
+#headerBarStandalone {
+	font-size: 20px;
+	@extend .highlight;
+    background-repeat:no-repeat;
+    background-position:15px 0px;
+	display: none;
+}
+

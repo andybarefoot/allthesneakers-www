@@ -190,7 +190,7 @@ $related=getData($sqlQueryRelated);
 	<div id="headerBarStandalone">
 		<h1>
 			<div id="nextShoe"><a href="/">All The Sneakers ></a></div>
-			<a href="http://www.allthesneakers.com"><img class="logo" src="/images/all-the-sneakers.png" /></a><span id="nameText"><? echo $sneakerName; ?> </span><span id="idText">(<? echo $sneakerLocalID; ?>)</span>&nbsp;
+			<a href="/"><img class="logo" src="/images/all-the-sneakers.png" /></a><span id="nameText"><? echo $sneakerName; ?> </span><span id="idText">(<? echo $sneakerLocalID; ?>)</span>&nbsp;
 		</h1>
 	</div>
 </div>

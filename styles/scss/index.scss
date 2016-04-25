@@ -1,0 +1,396 @@
+/* apply a natural box layout model to all elements, but allowing components to change */
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+
+$highlightColor: #000;
+$highlightTextColor: #fff;
+
+$contentColor: #fff;
+$contentTextColor: #333;
+
+$primaryFont: 'Lato', serif;
+
+$settings: (
+    maxWidth: 800px,
+    margin: 15px,
+    breakpoints: (
+		xs: "(min-width: 440px)",
+		sm: "(min-width: 600px)",
+		md: "(min-width: 800px)",
+		lg: "(min-width: 1000px)",
+		xl: "(min-width: 1250px)",
+		xxl: "(min-width: 1500px)",
+		xxxl: "(min-width: 1800px)"
+    ),
+    columns: (
+		xs: 3,
+		sm: 3,
+		md: 4,
+		lg: "(min-width: 1000px)",
+		xl: "(min-width: 1250px)",
+		xxl: "(min-width: 1500px)",
+		xxxl: "(min-width: 1800px)"
+    )   
+);
+
+
+@import "_layout.scss";
+@import "_text.scss";
+
+img {
+	max-width: 100%;
+}
+body{
+	margin: 0;
+	font-family: $primaryFont;
+	font-weight: 300;
+	background-color: #FFFFFF;
+	color: #333333;
+    background-image:url('/images/backgrounds/tread.png');
+}
+#logo {
+	float: left;
+	margin: 0 10px 0 10px; 
+    display: none;
+}
+#filterImg {
+	margin: 2px 20px 0 0;
+	float: right;
+}
+nav-filters {
+	margin: -5px 20px 0 0;
+    float: right;
+    display: none;
+    background-color: black;
+	a{
+		color: #FFFFFF;    
+	}
+	ul{
+		list-style-type: none;
+	    float: left;
+	    margin-left: -30px;
+	    margin-right: 20px;
+	}
+}
+
+#modelFilters{
+	display: none;
+}
+.subHeader{
+	padding-top: 10px;
+}
+.brand2 {
+	display: none;
+}
+#searchImg {
+	margin: 2px 20px 0 0;
+    float: right;
+}
+#searchField {
+	font-family: $primaryFont;
+	width: 100%;
+    height: 40px;
+    margin: 20px 0 20px 0;
+    padding: 10px 5px;
+    border: 0;
+    background: #fff;
+    border-radius: 10px;      
+	font-size: 100%;
+}
+#searchResultsHolder{
+    display: none;
+    background-color: black;
+    width:100%;
+}
+#searchTermResults{
+	font-family: $primaryFont;
+	width: 88%;
+	margin: auto;
+	margin-bottom: 20px;
+	padding: 10px 1%;
+	border: 0;
+	background: #FFFFFF;
+	border-radius: 10px;
+	font-size: 100%;
+}
+#searchTermResults a{
+  font-size: 0.85em;
+  color: black;
+  margin-right: 20px;
+}
+#longerResults{
+    display: none;
+}
+grid-products {
+	display: block;
+    margin-top: 60px;
+}
+#loading {
+	width: 100%;
+	height: 30px;
+	text-align:center;
+	background-color: #000000;
+	color: #FFFFFF;
+	clear: both;
+}
+
+
+#nextShoe{
+	margin: 0 10px 0 10px;
+	float: right;
+}
+#prevShoe{
+	margin: 0 10px 0 10px;
+	float: right;
+}
+#backText2 {
+	display: none;	
+}
+#nextText {
+	display: none;	
+	line-height: 24px;		
+}
+#nameText {
+	display: none;
+	line-height: 24px;		
+}
+#idText {
+	display: none;	
+}
+
+#sneaker {
+    margin: 60px 0 0 0;
+	height: 1000px;
+}
+
+#sneakerImage {
+    margin: 0 2.666666666% 0 2.666666666%;
+}
+
+#sneakerImage img {
+	box-shadow: 0 0 10px rgba(0,0,0,0.27);
+}
+
+#sneaker .buyLink {
+	display: block;
+	width: 200px;
+	background: #000000;
+	padding: 10px;
+	text-align: left;
+	color: white;
+	text-decoration: none;
+}
+#sneaker ul{
+	list-style-type: none;
+	float: right;
+}
+#sneaker li{
+	margin-top: 10px;
+}
+#sneakerDetails{
+	box-shadow: 0 0 10px rgba(0,0,0,0.27);
+	background-color: white;
+	margin: 10px 2.666666666% 0 2.666666666%;
+	padding: 10px;
+	overflow: auto;
+}
+#sneakerDetails p{
+	margin-bottom: 10px;
+}
+#relatedSneakers {
+	clear: both;
+}
+#relatedSneakers h4{
+	box-shadow: 0 0 10px rgba(0,0,0,0.27);
+}
+#introLinks{
+	display: none;
+}
+
+#noResults{
+	height: 150px;
+	padding: 20px;
+	font-size: 20px;
+	text-align: center;
+}
+
+#welcome{
+	width:94.8%;
+	margin: auto;
+	background-color: #000000;
+	color: #ffffff;
+	padding: 20px;
+}
+
+/* 
+440 BREAK POINT
+*/
+@media screen and (min-width: 440px){	
+	.related9{
+	    display: none;
+	}
+}	
+
+/* 
+600 BREAK POINT
+*/
+@media screen and (min-width: 600px){	
+	h1{
+/*		text-indent: 65px; */
+	}
+	nav, #headerBarStandalone{
+/*	   background-image:url('/images/outline.png'); */
+	}
+	#nameText {
+		display: inline;		
+	}
+	#backText1 {
+		display: none;		
+	}
+	#backText2 {
+		display: inline;		
+	}
+	#logo {
+		display: inline;		
+	}
+	#modelFilters{
+		display: initial;
+	}
+		
+	#introLinks{
+		display: block;
+		margin: 0 0 10px 0;
+	}
+	
+	#introLinks p{
+		margin-top: 10px;
+		margin-bottom: 5px;
+		color: white;
+	}
+	
+	#introLinks p a{
+		margin-left: 10px;
+		color: white;
+	    cursor:pointer;
+		text-decoration: underline;
+	}
+
+}
+
+	
+
+/* 
+800 BREAK POINT
+*/
+@media screen and (min-width: 800px){	
+	#nextText {
+		display: inline;	
+	}
+	h4{
+		margin: 20px 2% 20px 2%;
+	}
+	#sneakerImage {
+		float: right;
+		width: 60%;
+		margin: 0 2% 20px 0;
+	}
+	#sneakerDetails {
+		width: 31%;
+		margin: 0 0 0 2%;
+	}
+	.related8, .related9{
+	    display: none;
+	}
+	#longerResults{
+	    display: inline;
+	}
+	#introLinks p{
+		font-size: 14px;
+		margin-top: 5px;
+	}
+	
+}	
+
+
+
+
+/* 
+1000 BREAK POINT
+*/
+@media screen and (min-width: 1000px){	
+	grid-products, #sneaker {
+	    margin-top: 70px;
+	}
+	#idText {
+		display: inline;	
+	}
+	#sneakerImage {
+		float: right;
+		width: 50%;
+		margin: 0 2% 20px 0;
+	}
+	#sneakerDetails {
+		width: 43%;
+		margin: 0 0 0 2%;
+	}
+	.related8, .related9{
+	    display: block;
+	}
+	#introLinks p{
+		font-size: 16px;
+		margin-top: 10px;
+	}
+}
+
+/* 
+1250 BREAK POINT
+*/
+@media screen and (min-width: 1250px){	
+	#sneakerImage {
+		margin: 0 1.6% 20px 0;
+	}
+	#sneakerDetails {
+		margin: 0 0 0 1.6%;
+	}
+	h4{
+		margin: 20px 1.6% 20px 1.6%;
+	}
+}	
+
+/* 
+1500 BREAK POINT
+*/
+@media screen and (min-width: 1500px){	
+	#sneakerImage {
+		margin: 0 1.3333333% 20px 0;
+	}
+	#sneakerDetails {
+		margin: 0 0 0 1.3333333%;
+	}
+	h4{
+		margin: 20px 1.3333333% 20px 1.3333333%;
+	}
+}	
+
+/* 
+1800 BREAK POINT
+*/
+@media screen and (min-width: 1800px){	
+	#sneakerImage {
+		margin: 0 20px 20px 0;
+	}
+	#sneakerDetails {
+		margin: 0 0 0 20px;
+		width: 45%;
+	}
+	h4{
+		margin: 20px 20px 20px 20px;
+	}
+}	
+
+

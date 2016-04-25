@@ -5,10 +5,9 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 	<meta name="viewport" content="initial-scale=1.0, width=device-width, minimal-ui" />		
 	<title>All The Sneakers</title>
-	<script type="text/javascript" src="js/webcomponents.js"></script>
-	<script type="text/javascript" src="js/search.js"></script>
 	<script type="text/javascript" src="common/jquery/jquery-1.8.2.min.js"></script>
 	<script type="text/javascript" src="common/jquery/jquery.infinitescroll.min.js"></script>
+	<script type="text/javascript" src="js/search.js"></script>
 	<link rel="stylesheet" type="text/css" href="styles/index.css" />
 	<link href='https://fonts.googleapis.com/css?family=Lato:400,100,300' rel='stylesheet' type='text/css'>
 	<link rel="apple-touch-icon" sizes="57x57" href="/images/ios-icons/apple-icon-57x57.png">
@@ -34,6 +33,7 @@
 // register custom elements
 var cardShoe = document.registerElement('card-shoe');
 var cardIntro = document.registerElement('card-intro');
+var navSearchbar = document.registerElement('nav-searchbar');
 var navFilters = document.registerElement('nav-filters');
 var gridProducts = document.registerElement('grid-products');
 
@@ -94,11 +94,11 @@ $(function(){
 	});
 	// add toggle functionality to search icon
 	$("#searchImg").click(function(){
-		$("#nav-searchbar").slideToggle();
+		$("nav-searchbar").slideToggle();
 	});
 	loadSneakers(1);
 	loadFilters(false);
-	$('grid-products').infinitescroll({
+	$('#content').infinitescroll({
 		navSelector  : '#page-nav',    // selector for the paged navigation 
 		nextSelector : '#page-nav a',  // selector for the NEXT link (to page 2)
 		itemSelector : 'card-shoe',     // selector for all items you'll retrieve
@@ -154,10 +154,10 @@ function getUrlParameter(sParam)
     }
 }
 
-// adjusts y value of grid-products as header changes height 
+// adjusts y value of content as header changes height 
 function adjustHeader(){
 	var headerHeight = 40 + $('nav').height();
-	$('grid-products').css({'margin-top': headerHeight});
+	$('#content').css({'margin-top': headerHeight});
 }
 
 function loadFilters(allB){
@@ -209,7 +209,7 @@ function toggleBrandFilters(){
 
 
 function loadSneakers(pageID){
-	$('grid-products').infinitescroll({
+	$('#content').infinitescroll({
 		state: {
 			isDone: false, // For when it goes all the way through the archive.
 			isPaused: false,
@@ -238,7 +238,7 @@ function loadSneakers(pageID){
 	}
 	sneakersURL="sneakers.php?intro="+showIntro+"&p="+pageID+"&b="+brandStr+"&c="+colourStr+"&g="+genderStr+"&m="+modelStr+"&search="+search+"&searchB="+searchB+"&searchI="+searchI+"&searchN="+searchN+"&order="+order;
 	console.log(sneakersURL);
-	$("grid-products").load(sneakersURL,function(responseTxt,statusTxt,xhr){
+	$("#content").load(sneakersURL,function(responseTxt,statusTxt,xhr){
 		if(statusTxt=="success"){
 			introHeight();
 			showIntro=0;
@@ -258,26 +258,19 @@ function loadSneakers(pageID){
 
 //change height of intro
 function introHeight() {
-	shoeImgHeight=0.8*$('grid-products').children('card-shoe').first().width();
+	shoeImgHeight=0.8*$('#content').children('.shoe').first().width();
 	shoeDetailsHeight=$('.shoeDetails').first().height();
-	shoeCardGutter=parseInt($('grid-products').children('card-shoe').css("marginBottom").replace('px', ''));
-	introCardPadding=parseInt($('card-intro').css("paddingTop").replace('px','')) + parseInt($('card-intro').css("paddingBottom").replace('px',''));
-	cardHeightValue = 2 * (shoeImgHeight  + shoeDetailsHeight) + shoeCardGutter - introCardPadding;
 	if($(window).width()>800){
-		$('card-intro').height(2*(shoeImgHeight+shoeDetailsHeight));
-		$('card-intro').height(cardHeightValue);
-		console.log(2*(shoeImgHeight+shoeDetailsHeight));
+		$('#introBox').height(2*(shoeImgHeight+shoeDetailsHeight)+24);
 	}else{
-		$('card-intro').css('height', 'auto');
+		$('#introBox').css('height', 'auto');
 	}
 }
 function updateLocalData(){
-	console.log("updating");
 	$("#infscr-loading").hide();
 	if(typeof(Storage) !== "undefined") {
-		console.log("not undefined");
 		idStr="";
-		$( "card-shoe" ).each(function( index ) {
+		$( ".shoe" ).each(function( index ) {
 			idStr+=$( this ).attr('id')+"/";
 		});
 		localStorage.productsList = idStr;
@@ -339,11 +332,11 @@ function refreshFilterStr(){
 		<img id="filterImg" src="images/filter.png" width="17" height="17" />
 		<a href="/"><img id="logo" src="images/all-the-sneakers.png" /></a><h1>All the<span id="filterString"></span><span id="searchString"></span> sneakers...</h1>
 	</nav>
-	<div id="nav-searchbar">
+	<nav-searchbar>
 		<form id="searchForm" action="/" method="GET">
 			<input type="search" name="search" id="searchField" placeholder="Search..." />
 		</form>
-	</div id="nav-searchbar">
+	</nav-searchbar>
 <!--	<div id="searchResultsHolder">
 		<div id="searchTermResults"></div>
 	</div>-->
@@ -356,9 +349,9 @@ function refreshFilterStr(){
 		</span>
 	</nav-filters>
 </header>
-<grid-products>
-	<card-shoe></card-shoe>
-</grid-products>
+<div id="content">
+	<div class="shoe"></div>
+</div>
 <nav id="page-nav">
   <a href="sneakers.php?p=2"></a>
 </nav>

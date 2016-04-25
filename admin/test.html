@@ -1,0 +1,235 @@
+<html lang="en" class=""><head>
+	<meta charset="UTF-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	<meta name="viewport" content="initial-scale=1.0, width=device-width, minimal-ui">		
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<title>All The Sneakers</title>
+	<script async="" src="//www.google-analytics.com/analytics.js"></script><script type="text/javascript" src="/common/jquery/jquery-1.8.2.min.js"></script>
+	<script type="text/javascript" src="../common/jquery/jquery.infinitescroll.min.js"></script>
+	<script type="text/javascript" src="../js/search.js"></script>
+<!--	<script type="text/javascript" src="js/lightbox.js"></script>	-->
+	<link rel="stylesheet" type="text/css" href="../styles/general.css">
+	<link rel="stylesheet" type="text/css" href="../styles/admin.css">
+<!--	<link rel="stylesheet" type="text/css" href="styles/lightbox.css" />	-->
+	<link href="http://fonts.googleapis.com/css?family=Roboto+Slab:300" rel="stylesheet" type="text/css">
+	<!-- Add fancyBox main JS and CSS files -->
+	<script type="text/javascript" src="../common/jquery/jquery.fancybox.js?v=2.1.5"></script>
+	<link rel="stylesheet" type="text/css" href="../styles/jquery.fancybox.css?v=2.1.5" media="screen">
+
+	<script src="https://hammerjs.github.io/dist/hammer.js"></script>
+	<script>
+		var admin=true;
+	</script>
+
+<script>
+
+// Google Analytics
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-56778069-1', 'auto');
+ga('send', 'pageview');
+// end GA
+
+var bFilters=[];
+var cFilters=[];
+var gFilters=[];
+
+// ensure document is loaded before attempting any jQuery
+$(function(){
+	$("#filter").click(function(){
+		$("#filters").slideToggle();
+	});
+	$(":checkbox").change(function(){
+		refreshFilterStr();
+	});
+	loadSneakers(1);
+	$('#content').infinitescroll({
+		navSelector  : '#page-nav',    // selector for the paged navigation 
+		nextSelector : '#page-nav a',  // selector for the NEXT link (to page 2)
+		itemSelector : '.shoe',     // selector for all items you'll retrieve
+		path: function(index) {  
+			return "sneakers.php?p=" + index + "&b="+brandStr;
+		},
+		loading: {
+			finished: undefined,
+			finishedMsg: "<div id='loading'>You've seen all the sneakers.</div>",
+			img: null,
+			msg: null,
+			msgText: "<div id='loading'>Loading more sneakers...</div>",
+			selector: null,
+			speed: 'fast',
+			start: undefined
+		},
+ 	});
+});
+function loadSneakers(pageID){
+	brandStr="";
+	for(i=0;i<bFilters.length;i++){
+		brandStr+=bFilters[i];
+		brandStr+=",";
+	}
+		$("#content").load("sneakers.php?p="+pageID+"&b="+brandStr,function(responseTxt,statusTxt,xhr){
+			if(statusTxt=="success")
+// alert("External content loaded successfully!");
+			if(statusTxt=="error")
+			alert("Error: "+xhr.status+": "+xhr.statusText);
+		});
+}
+function refreshFilterStr(){
+   filterStr='';
+		bFilters.length=0;
+		cFilters.length=0;
+		gFilters.length=0;
+    $(":checkbox").each(function(){
+		if ($(this).is(':checked')) {
+			filterStr+=' <a href="#" id="';
+			filterStr+=$(this).attr('id');
+			filterStr+='">';
+			filterStr+=$(this).parent().text();
+			filterStr+='</a>,';
+			fillSplit=$(this).attr('id').split("_");
+			if(fillSplit[0]=="b"){
+				bFilters.push(fillSplit[1]);
+			}
+		}
+    });
+	filterStr=filterStr.slice(0,-1);
+	$("#filterString").html(filterStr);
+	$("#filterString a").click(function(){
+		filterID=$(this).attr('id');
+		$('input[id="'+ filterID + '"]').prop('checked', false);
+		refreshFilterStr();
+	});	
+	loadSneakers(1);
+}
+$(document).ready(function() {
+	// make the overlay full width
+	$(".fancybox").fancybox({
+	    'type': 'ajax',
+	    'fitToView': true,
+	    'autoSize': true,
+	    'fitToView': true,
+	    'margin': 0,
+	    'padding': 0,
+	    'topRatio': 0,
+	    'closeBtn': false,
+		afterLoad: function(current, previous) {
+			var myElement = document.getElementsByClassName('fancybox-overlay');
+			var mc = new Hammer(myElement[0]);
+			mc.on("swipeleft", function() {
+				$.fancybox.next();
+			});
+			mc.on("swiperight", function() {
+				$.fancybox.prev();
+			});
+		},
+	    helpers : {
+	        overlay : {
+	        	locked: true,
+	            css : {
+	                'background' : 'rgba(255, 255, 255, 1)'
+	            }
+	        }
+	    }
+	});
+});
+
+
+</script>	
+<style>
+	#filter {
+		margin: 0 20px 0 0;
+		float: right;
+	}
+	#filters {
+		margin: 0 20px 0 0;
+	    float: right;
+	    display: none;
+	    
+	}
+	#filters ul{
+		list-style-type: none;
+	    float: left;
+	}
+	#search {
+		margin: 0 20px 0 0;
+	    float: right;
+	    display: none;
+	    
+	}
+</style> 
+<style type="text/css">.fancybox-margin{margin-right:0px;}</style></head>
+<body>
+<div class="header">
+	<div id="headerBar">
+		<h1>
+			<div id="filter"><img src="../images/filter.png" width="17" height="17"></div>
+			All the<span id="filterString"></span> sneakers...
+		</h1>
+	</div>
+	<div id="filters">
+		<ul>Brand
+<li><input type="checkbox" value="1" id="b_1"><label for="b_1">adidas</label></li>
+<li><input type="checkbox" value="6" id="b_6"><label for="b_6">Converse</label></li>
+<li><input type="checkbox" value="2" id="b_2"><label for="b_2">Nike</label></li>
+<li><input type="checkbox" value="5" id="b_5"><label for="b_5">Onitsuka Tiger</label></li>
+<li><input type="checkbox" value="7" id="b_7"><label for="b_7">Osiris</label></li>
+<li><input type="checkbox" value="3" id="b_3"><label for="b_3">Puma</label></li>
+<li><input type="checkbox" value="4" id="b_4"><label for="b_4">Reebok</label></li>
+</ul>
+<!--		<ul>Colors
+<li><input type="checkbox" value="8" id="c_8"/><label for="c_8">white</label></li>
+<li><input type="checkbox" value="7" id="c_7"/><label for="c_7">black</label></li>
+<li><input type="checkbox" value="1" id="c_1"/><label for="c_1">red</label></li>
+<li><input type="checkbox" value="2" id="c_2"/><label for="c_2">orange</label></li>
+<li><input type="checkbox" value="14" id="c_14"/><label for="c_14">yellow</label></li>
+<li><input type="checkbox" value="3" id="c_3"/><label for="c_3">green</label></li>
+<li><input type="checkbox" value="4" id="c_4"/><label for="c_4">blue</label></li>
+<li><input type="checkbox" value="5" id="c_5"/><label for="c_5">purple</label></li>
+<li><input type="checkbox" value="9" id="c_9"/><label for="c_9">gray</label></li>
+<li><input type="checkbox" value="6" id="c_6"/><label for="c_6">pink</label></li>
+<li><input type="checkbox" value="12" id="c_12"/><label for="c_12">brown</label></li>
+<li><input type="checkbox" value="10" id="c_10"/><label for="c_10">silver</label></li>
+<li><input type="checkbox" value="11" id="c_11"/><label for="c_11">gold</label></li>
+		</ul>
+		<ul>Gender
+<li><input type="checkbox" value="4" id="g_4"/><label for="g_4">Kids</label></li>
+<li><input type="checkbox" value="1" id="g_1"/><label for="g_1">Men</label></li>
+<li><input type="checkbox" value="2" id="g_2"/><label for="g_2">Women</label></li>
+</ul>
+-->	</div>
+	<div id="search">
+		<ul>Brand
+<li><a href="#">adidas</a></li>
+<li><a href="#">Converse</a></li>
+<li><a href="#">Nike</a></li>
+<li><a href="#">Onitsuka Tiger</a></li>
+<li><a href="#">Osiris</a></li>
+<li><a href="#">Puma</a></li>
+<li><a href="#">Reebok</a></li>
+<li><a href="#">adidas</a></li>
+<li><a href="#">Converse</a></li>
+<li><a href="#">Nike</a></li>
+<li><a href="#">Onitsuka Tiger</a></li>
+<li><a href="#">Osiris</a></li>
+<li><a href="#">Puma</a></li>
+<li><a href="#">Reebok</a></li>
+<li><a href="#">adidas</a></li>
+<li><a href="#">Converse</a></li>
+<li><a href="#">Nike</a></li>
+<li><a href="#">Onitsuka Tiger</a></li>
+<li><a href="#">Osiris</a></li>
+<li><a href="#">Puma</a></li>
+<li><a href="#">Reebok</a></li>
+</ul></div>
+</div>
+<div id="content"><div class="shoe" id="6575"><a class="fancybox fancybox.ajax" rel="group" href="/sneaker/6575/saucony/saucony-shadow-5000"><img alt="Saucony: Saucony Shadow 5000" src="http://www.allthesneakers.com/images/products/26/250/6575.jpg"></a><div class="shoeDetails"><span class="shoeName">Saucony Shadow 5000</span><br><span class="shoeBrand">Saucony</span><span class="shoePrice">$105.00</span></div><div class="adminLayer">ADMIN</div></div><div class="shoe" id="6574"><a class="fancybox fancybox.ajax" rel="group" href="/sneaker/6574/saucony/saucony-shadow-5000"><img alt="Saucony: Saucony Shadow 5000" src="http://www.allthesneakers.com/images/products/26/250/6574.jpg"></a><div class="shoeDetails"><span class="shoeName">Saucony Shadow 5000</span><br><span class="shoeBrand">Saucony</span><span class="shoePrice">$105.00</span></div><div class="adminLayer">ADMIN</div></div><div class="shoe" id="6571"><a class="fancybox fancybox.ajax" rel="group" href="/sneaker/6571/converse/converse-chuck-taylor-all-star-zip"><img alt="Converse: Converse Chuck Taylor All Star Zip" src="http://www.allthesneakers.com/images/products/6/250/6571.jpg"></a><div class="shoeDetails"><span class="shoeName">Converse Chuck Taylor All Star Zip</span><br><span class="shoeBrand">Converse</span><span class="shoePrice">$99.00</span></div><div class="adminLayer">ADMIN</div></div><div class="shoe" id="6570"><a class="fancybox fancybox.ajax" rel="group" href="/sneaker/6570/vans/vans-era-herringbone"><img alt="Vans: Vans Era Herringbone" src="http://www.allthesneakers.com/images/products/8/250/6570.jpg"></a><div class="shoeDetails"><span class="shoeName">Vans Era Herringbone</span><br><span class="shoeBrand">Vans</span><span class="shoePrice">$65.00</span></div><div class="adminLayer">ADMIN</div></div><div class="shoe" id="6569"><a class="fancybox fancybox.ajax" rel="group" href="/sneaker/6569/vans/vans-vault-x-taka-hayashi-sk8-mid-school-lx"><img alt="Vans: Vans Vault x Taka Hayashi Sk8 Mid School LX" src="http://www.allthesneakers.com/images/products/8/250/6569.jpg"></a><div class="shoeDetails"><span class="shoeName">Vans Vault x Taka Hayashi Sk8 Mid School LX</span><br><span class="shoeBrand">Vans</span><span class="shoePrice">$175.00</span></div><div class="adminLayer">ADMIN</div></div><div class="shoe" id="6568"><a class="fancybox fancybox.ajax" rel="group" href="/sneaker/6568/asics/asics-gel-saga-animal"><img alt="Asics: Asics Gel Saga Animal" src="http://www.allthesneakers.com/images/products/22/250/6568.jpg"></a><div class="shoeDetails"><span class="shoeName">Asics Gel Saga 'Animal'</span><br><span class="shoeBrand">Asics</span><span class="shoePrice">$119.00</span></div><div class="adminLayer">ADMIN</div></div><div class="shoe" id="6567"><a class="fancybox fancybox.ajax" rel="group" href="/sneaker/6567/asics/asics-gel-lyte-iii-glow-in-the-dark"><img alt="Asics: Asics Gel Lyte III Glow in the Dark" src="http://www.allthesneakers.com/images/products/22/250/6567.jpg"></a><div class="shoeDetails"><span class="shoeName">Asics Gel Lyte III 'Glow in the Dark'</span><br><span class="shoeBrand">Asics</span><span class="shoePrice">$135.00</span></div><div class="adminLayer">ADMIN</div></div><div class="shoe" id="6566"><a class="fancybox fancybox.ajax" rel="group" href="/sneaker/6566/asics/asics-gt-cool-camo"><img alt="Asics: Asics GT Cool Camo" src="http://www.allthesneakers.com/images/products/22/250/6566.jpg"></a><div class="shoeDetails"><span class="shoeName">Asics GT Cool 'Camo'</span><br><span class="shoeBrand">Asics</span><span class="shoePrice">$135.00</span></div><div class="adminLayer">ADMIN</div></div><div class="shoe" id="6565"><a class="fancybox fancybox.ajax" rel="group" href="/sneaker/6565/vans/vans-vault-x-taka-hayashi-era-huarache-lx"><img alt="Vans: Vans Vault x Taka Hayashi Era Huarache LX" src="http://www.allthesneakers.com/images/products/8/250/6565.jpg"></a><div class="shoeDetails"><span class="shoeName">Vans Vault x Taka Hayashi Era Huarache LX</span><br><span class="shoeBrand">Vans</span><span class="shoePrice">$175.00</span></div><div class="adminLayer">ADMIN</div></div><div class="shoe" id="6564"><a class="fancybox fancybox.ajax" rel="group" href="/sneaker/6564/vans/vans-vault-x-taka-hayashi-era-huarache-lx"><img alt="Vans: Vans Vault x Taka Hayashi Era Huarache LX" src="http://www.allthesneakers.com/images/products/8/250/6564.jpg"></a><div class="shoeDetails"><span class="shoeName">Vans Vault x Taka Hayashi Era Huarache LX</span><br><span class="shoeBrand">Vans</span><span class="shoePrice">$175.00</span></div><div class="adminLayer">ADMIN</div></div><div class="shoe" id="6563"><a class="fancybox fancybox.ajax" rel="group" href="/sneaker/6563/vans/vans-vault-x-taka-hayashi-sk8-huarache-lx"><img alt="Vans: Vans Vault x Taka Hayashi Sk8 Huarache LX" src="http://www.allthesneakers.com/images/products/8/250/6563.jpg"></a><div class="shoeDetails"><span class="shoeName">Vans Vault x Taka Hayashi Sk8 Huarache LX</span><br><span class="shoeBrand">Vans</span><span class="shoePrice">$225.00</span></div><div class="adminLayer">ADMIN</div></div><div class="shoe" id="6562"><a class="fancybox fancybox.ajax" rel="group" href="/sneaker/6562/vans/vans-vault-x-taka-hayashi-sk8-huarache-lx"><img alt="Vans: Vans Vault x Taka Hayashi Sk8 Huarache LX" src="http://www.allthesneakers.com/images/products/8/250/6562.jpg"></a><div class="shoeDetails"><span class="shoeName">Vans Vault x Taka Hayashi Sk8 Huarache LX</span><br><span class="shoeBrand">Vans</span><span class="shoePrice">$225.00</span></div><div class="adminLayer">ADMIN</div></div><div class="shoe" id="6561"><a class="fancybox fancybox.ajax" rel="group" href="/sneaker/6561/saucony/saucony-elite-x-bodega-shadow-6000-sweater"><img alt="Saucony: Saucony Elite x Bodega Shadow 6000 Sweater" src="http://www.allthesneakers.com/images/products/26/250/6561.jpg"></a><div class="shoeDetails"><span class="shoeName">Saucony Elite x Bodega Shadow 6000 'Sweater'</span><br><span class="shoeBrand">Saucony</span><span class="shoePrice">$145.00</span></div><div class="adminLayer">ADMIN</div></div><div class="shoe" id="6560"><a class="fancybox fancybox.ajax" rel="group" href="/sneaker/6560/puma/puma-suede-angora-made-in-japan"><img alt="Puma: Puma Suede Angora  Made in Japan" src="http://www.allthesneakers.com/images/products/3/250/6560.jpg"></a><div class="shoeDetails"><span class="shoeName">Puma Suede Angora - Made in Japan</span><br><span class="shoeBrand">Puma</span><span class="shoePrice">$265.00</span></div><div class="adminLayer">ADMIN</div></div><div class="shoe" id="6559"><a class="fancybox fancybox.ajax" rel="group" href="/sneaker/6559/puma/puma-suede-angora-made-in-japan"><img alt="Puma: Puma Suede Angora  Made in Japan" src="http://www.allthesneakers.com/images/products/3/250/6559.jpg"></a><div class="shoeDetails"><span class="shoeName">Puma Suede Angora - Made in Japan</span><br><span class="shoeBrand">Puma</span><span class="shoePrice">$265.00</span></div><div class="adminLayer">ADMIN</div></div><div class="shoe" id="6558"><a class="fancybox fancybox.ajax" rel="group" href="/sneaker/6558/puma/puma-suede-angora-made-in-japan"><img alt="Puma: Puma Suede Angora  Made in Japan" src="http://www.allthesneakers.com/images/products/3/250/6558.jpg"></a><div class="shoeDetails"><span class="shoeName">Puma Suede Angora - Made in Japan</span><br><span class="shoeBrand">Puma</span><span class="shoePrice">$265.00</span></div><div class="adminLayer">ADMIN</div></div><div class="shoe" id="6557"><a class="fancybox fancybox.ajax" rel="group" href="/sneaker/6557/nike/nike-flyknit-trainer-chukka-fs"><img alt="Nike: Nike Flyknit Trainer Chukka FS" src="http://www.allthesneakers.com/images/products/2/250/6557.jpg"></a><div class="shoeDetails"><span class="shoeName">Nike Flyknit Trainer Chukka FS</span><br><span class="shoeBrand">Nike</span><span class="shoePrice">$199.00</span></div><div class="adminLayer">ADMIN</div></div><div class="shoe" id="6556"><a class="fancybox fancybox.ajax" rel="group" href="/sneaker/6556/sperry/sperry-topsider-x-velour-cloud-cvo"><img alt="Sperry: Sperry Topsider x Velour Cloud CVO" src="http://www.allthesneakers.com/images/products/12/250/6556.jpg"></a><div class="shoeDetails"><span class="shoeName">Sperry Topsider x Velour Cloud CVO</span><br><span class="shoeBrand">Sperry</span><span class="shoePrice">$65.00</span></div><div class="adminLayer">ADMIN</div></div><div class="shoe" id="6555"><a class="fancybox fancybox.ajax" rel="group" href="/sneaker/6555/sperry/sperry-topsider-x-velour-cloud-cvo"><img alt="Sperry: Sperry Topsider x Velour Cloud CVO" src="http://www.allthesneakers.com/images/products/12/250/6555.jpg"></a><div class="shoeDetails"><span class="shoeName">Sperry Topsider x Velour Cloud CVO</span><br><span class="shoeBrand">Sperry</span><span class="shoePrice">$65.00</span></div><div class="adminLayer">ADMIN</div></div><div class="shoe" id="6554"><a class="fancybox fancybox.ajax" rel="group" href="/sneaker/6554/sperry/sperry-topsider-x-velour-cloud-chukka"><img alt="Sperry: Sperry Topsider x Velour Cloud Chukka" src="http://www.allthesneakers.com/images/products/12/250/6554.jpg"></a><div class="shoeDetails"><span class="shoeName">Sperry Topsider x Velour Cloud Chukka</span><br><span class="shoeBrand">Sperry</span><span class="shoePrice">$75.00</span></div><div class="adminLayer">ADMIN</div></div><div class="shoe" id="6553"><a class="fancybox fancybox.ajax" rel="group" href="/sneaker/6553/sperry/sperry-topsider-x-velour-cloud-chukka"><img alt="Sperry: Sperry Topsider x Velour Cloud Chukka" src="http://www.allthesneakers.com/images/products/12/250/6553.jpg"></a><div class="shoeDetails"><span class="shoeName">Sperry Topsider x Velour Cloud Chukka</span><br><span class="shoeBrand">Sperry</span><span class="shoePrice">$75.00</span></div><div class="adminLayer">ADMIN</div></div><div class="shoe" id="6551"><a class="fancybox fancybox.ajax" rel="group" href="/sneaker/6551/nike/nike-blazer-mid-prm-vntg"><img alt="Nike: Nike Blazer Mid PRM VNTG" src="http://www.allthesneakers.com/images/products/2/250/6551.jpg"></a><div class="shoeDetails"><span class="shoeName">Nike Blazer Mid PRM VNTG</span><br><span class="shoeBrand">Nike</span><span class="shoePrice">$95.00</span></div><div class="adminLayer">ADMIN</div></div><div class="shoe" id="6550"><a class="fancybox fancybox.ajax" rel="group" href="/sneaker/6550/nike/nike-free-run-2"><img alt="Nike: Nike Free Run 2" src="http://www.allthesneakers.com/images/products/2/250/6550.jpg"></a><div class="shoeDetails"><span class="shoeName">Nike Free Run 2</span><br><span class="shoeBrand">Nike</span><span class="shoePrice">$109.00</span></div><div class="adminLayer">ADMIN</div></div><div class="shoe" id="6549"><a class="fancybox fancybox.ajax" rel="group" href="/sneaker/6549/nike/nike-air-max-1-mid-fb"><img alt="Nike: Nike Air Max 1 Mid FB" src="http://www.allthesneakers.com/images/products/2/250/6549.jpg"></a><div class="shoeDetails"><span class="shoeName">Nike Air Max 1 Mid FB</span><br><span class="shoeBrand">Nike</span><span class="shoePrice">$145.00</span></div><div class="adminLayer">ADMIN</div></div><div class="shoe" id="6548"><a class="fancybox fancybox.ajax" rel="group" href="/sneaker/6548/nike/nike-flyknit-rosherun"><img alt="Nike: Nike Flyknit Rosherun" src="http://www.allthesneakers.com/images/products/2/250/6548.jpg"></a><div class="shoeDetails"><span class="shoeName">Nike Flyknit Rosherun</span><br><span class="shoeBrand">Nike</span><span class="shoePrice">$129.00</span></div><div class="adminLayer">ADMIN</div></div><div class="shoe" id="6547"><a class="fancybox fancybox.ajax" rel="group" href="/sneaker/6547/nike/nike-free-flyknit-chukka"><img alt="Nike: Nike Free Flyknit Chukka" src="http://www.allthesneakers.com/images/products/2/250/6547.jpg"></a><div class="shoeDetails"><span class="shoeName">Nike Free Flyknit Chukka</span><br><span class="shoeBrand">Nike</span><span class="shoePrice">$175.00</span></div><div class="adminLayer">ADMIN</div></div><div class="shoe" id="6546"><a class="fancybox fancybox.ajax" rel="group" href="/sneaker/6546/puma/puma-trinomic-disc-natural-calm"><img alt="Puma: Puma Trinomic Disc Natural Calm" src="http://www.allthesneakers.com/images/products/3/250/6546.jpg"></a><div class="shoeDetails"><span class="shoeName">Puma Trinomic Disc Natural Calm</span><br><span class="shoeBrand">Puma</span><span class="shoePrice">$169.00</span></div><div class="adminLayer">ADMIN</div></div><div class="shoe" id="6545"><a class="fancybox fancybox.ajax" rel="group" href="/sneaker/6545/saucony/saucony-grid-9000-premium-spice-pack"><img alt="Saucony: Saucony Grid 9000 Premium Spice Pack" src="http://www.allthesneakers.com/images/products/26/250/6545.jpg"></a><div class="shoeDetails"><span class="shoeName">Saucony Grid 9000 Premium 'Spice Pack'</span><br><span class="shoeBrand">Saucony</span><span class="shoePrice">$119.00</span></div><div class="adminLayer">ADMIN</div></div><div class="shoe" id="6544"><a class="fancybox fancybox.ajax" rel="group" href="/sneaker/6544/saucony/saucony-grid-9000-premium-spice-pack"><img alt="Saucony: Saucony Grid 9000 Premium Spice Pack" src="http://www.allthesneakers.com/images/products/26/250/6544.jpg"></a><div class="shoeDetails"><span class="shoeName">Saucony Grid 9000 Premium 'Spice Pack'</span><br><span class="shoeBrand">Saucony</span><span class="shoePrice">$119.00</span></div><div class="adminLayer">ADMIN</div></div><div class="shoe" id="6543"><a class="fancybox fancybox.ajax" rel="group" href="/sneaker/6543/saucony/saucony-grid-9000-premium-spice-pack"><img alt="Saucony: Saucony Grid 9000 Premium Spice Pack" src="http://www.allthesneakers.com/images/products/26/250/6543.jpg"></a><div class="shoeDetails"><span class="shoeName">Saucony Grid 9000 Premium 'Spice Pack'</span><br><span class="shoeBrand">Saucony</span><span class="shoePrice">$119.00</span></div><div class="adminLayer">ADMIN</div></div><div class="shoe" id="6542"><a class="fancybox fancybox.ajax" rel="group" href="/sneaker/6542/saucony/saucony-grid-9000-premium-spice-pack"><img alt="Saucony: Saucony Grid 9000 Premium Spice Pack" src="http://www.allthesneakers.com/images/products/26/250/6542.jpg"></a><div class="shoeDetails"><span class="shoeName">Saucony Grid 9000 Premium 'Spice Pack'</span><br><span class="shoeBrand">Saucony</span><span class="shoePrice">$119.00</span></div><div class="adminLayer">ADMIN</div></div><div class="shoe" id="6541"><a class="fancybox fancybox.ajax" rel="group" href="/sneaker/6541/adidas/adidas-x-neighborhood-nh-shelltoe"><img alt="adidas: Adidas x Neighborhood NH Shelltoe" src="http://www.allthesneakers.com/images/products/1/250/6541.jpg"></a><div class="shoeDetails"><span class="shoeName">Adidas x Neighborhood NH Shelltoe</span><br><span class="shoeBrand">adidas</span><span class="shoePrice">$175.00</span></div><div class="adminLayer">ADMIN</div></div><div class="shoe" id="6540"><a class="fancybox fancybox.ajax" rel="group" href="/sneaker/6540/converse/converse-jack-purcell-ox"><img alt="Converse: Converse Jack Purcell Ox" src="http://www.allthesneakers.com/images/products/6/250/6540.jpg"></a><div class="shoeDetails"><span class="shoeName">Converse Jack Purcell Ox</span><br><span class="shoeBrand">Converse</span><span class="shoePrice">$59.00</span></div><div class="adminLayer">ADMIN</div></div><div class="shoe" id="6539"><a class="fancybox fancybox.ajax" rel="group" href="/sneaker/6539/converse/converse-jack-purcell-ltt-ox"><img alt="Converse: Converse Jack Purcell LTT Ox" src="http://www.allthesneakers.com/images/products/6/250/6539.jpg"></a><div class="shoeDetails"><span class="shoeName">Converse Jack Purcell LTT Ox</span><br><span class="shoeBrand">Converse</span><span class="shoePrice">$59.00</span></div><div class="adminLayer">ADMIN</div></div><div class="shoe" id="6538"><a class="fancybox fancybox.ajax" rel="group" href="/sneaker/6538/converse/converse-jack-purcell-ltt-ox"><img alt="Converse: Converse Jack Purcell LTT Ox" src="http://www.allthesneakers.com/images/products/6/250/6538.jpg"></a><div class="shoeDetails"><span class="shoeName">Converse Jack Purcell LTT Ox</span><br><span class="shoeBrand">Converse</span><span class="shoePrice">$85.00</span></div><div class="adminLayer">ADMIN</div></div><div class="shoe" id="6537"><a class="fancybox fancybox.ajax" rel="group" href="/sneaker/6537/converse/converse-jack-purcell-ltt-ox"><img alt="Converse: Converse Jack Purcell LTT Ox" src="http://www.allthesneakers.com/images/products/6/250/6537.jpg"></a><div class="shoeDetails"><span class="shoeName">Converse Jack Purcell LTT Ox</span><br><span class="shoeBrand">Converse</span><span class="shoePrice">$85.00</span></div><div class="adminLayer">ADMIN</div></div><div class="shoe" id="6536"><a class="fancybox fancybox.ajax" rel="group" href="/sneaker/6536/converse/converse-jack-purcell-ltt-ox"><img alt="Converse: Converse Jack Purcell LTT Ox" src="http://www.allthesneakers.com/images/products/6/250/6536.jpg"></a><div class="shoeDetails"><span class="shoeName">Converse Jack Purcell LTT Ox</span><br><span class="shoeBrand">Converse</span><span class="shoePrice">$65.00</span></div><div class="adminLayer">ADMIN</div></div><div class="shoe" id="6535"><a class="fancybox fancybox.ajax" rel="group" href="/sneaker/6535/converse/converse-jack-purcell-ltt-ox"><img alt="Converse: Converse Jack Purcell LTT Ox" src="http://www.allthesneakers.com/images/products/6/250/6535.jpg"></a><div class="shoeDetails"><span class="shoeName">Converse Jack Purcell LTT Ox</span><br><span class="shoeBrand">Converse</span><span class="shoePrice">$65.00</span></div><div class="adminLayer">ADMIN</div></div><div class="shoe" id="6534"><a class="fancybox fancybox.ajax" rel="group" href="/sneaker/6534/converse/converse-chuck-taylor-1970s-ox"><img alt="Converse: Converse Chuck Taylor 1970s Ox" src="http://www.allthesneakers.com/images/products/6/250/6534.jpg"></a><div class="shoeDetails"><span class="shoeName">Converse Chuck Taylor 1970s Ox</span><br><span class="shoeBrand">Converse</span><span class="shoePrice">$79.00</span></div><div class="adminLayer">ADMIN</div></div><div class="shoe" id="6533"><a class="fancybox fancybox.ajax" rel="group" href="/sneaker/6533/converse/converse-chuck-taylor-1970-hi"><img alt="Converse: Converse Chuck Taylor 1970 Hi" src="http://www.allthesneakers.com/images/products/6/250/6533.jpg"></a><div class="shoeDetails"><span class="shoeName">Converse Chuck Taylor 1970 Hi</span><br><span class="shoeBrand">Converse</span><span class="shoePrice">$79.00</span></div><div class="adminLayer">ADMIN</div></div></div>
+<nav id="page-nav">
+  <a href="sneakers.php?p=2"></a>
+</nav>
+
+</body></html>
