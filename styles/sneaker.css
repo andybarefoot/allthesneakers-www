@@ -213,6 +213,9 @@ card-sneaker-details {
       width: 93.18182%;
       margin: 0 0 15px 3.40909%; } }
 
+a {
+  color: #000; }
+
 h1 {
   margin: 10px 0 10px 15px;
   font-size: 20px;

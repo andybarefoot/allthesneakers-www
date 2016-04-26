@@ -52,6 +52,7 @@ $related=getData($sqlQueryRelated);
 	<meta name="apple-mobile-web-app-capable" content="yes" />
 	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
 	<title>All The Sneakers:  <? echo $sneakerName; ?> (<? echo $sneakerBrand; ?>: <? echo $sneakerLocalID; ?>)</title>
+	<script type="text/javascript" src="/js/webcomponents.js"></script>
 	<script type="text/javascript" src="/common/jquery/jquery-1.8.2.min.js"></script>
 	<script type="text/javascript" src="/common/jquery/hammer.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="/styles/reset.css">
