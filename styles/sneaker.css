@@ -8,10 +8,10 @@ html {
 
 /* define reused colours */
 /* define site fonts */
-.shadow, header, card-intro, card-shoe, #infscr-loading, #relatedSneakers h4, #sneakerImage img, #sneakerDetails {
+.shadow, header, card-intro, card-shoe, #infscr-loading, #relatedSneakers h4, card-sneaker-image, card-sneaker-details, #sneakerImage img {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.27); }
 
-.lowlight, card-shoe, #infscr-loading, #relatedSneakers h4 {
+.lowlight, card-shoe, #infscr-loading, #relatedSneakers h4, card-sneaker-image, card-sneaker-details {
   color: #333;
   background-color: #fff; }
 
@@ -38,7 +38,10 @@ header {
 
 grid-products {
   display: block;
-  margin-top: 60px; }
+  margin-top: 68px; }
+  @media screen and (max-width: 600px) {
+    grid-products {
+      margin: 45px 0 0 0; } }
 
 card-intro {
   float: left;
@@ -140,10 +143,83 @@ card-shoe, #infscr-loading {
   margin: 15px;
   padding: 10px; }
 
+card-sneaker-image {
+  display: block;
+  float: left;
+  margin: 15px; }
+  @media screen and (max-width: 1800px) {
+    card-sneaker-image {
+      width: 55.83333%;
+      margin: 0 0 15px 0.83333%; } }
+  @media screen and (max-width: 1500px) {
+    card-sneaker-image {
+      width: 56.75%;
+      margin: 0 0 15px 1%; } }
+  @media screen and (max-width: 1250px) {
+    card-sneaker-image {
+      width: 58.08%;
+      margin: 0 0 15px 1.2%; } }
+  @media screen and (max-width: 1000px) {
+    card-sneaker-image {
+      width: 60.0625%;
+      margin: 0 0 15px 1.5%; } }
+  @media screen and (max-width: 800px) {
+    card-sneaker-image {
+      float: none;
+      width: 96.25%;
+      margin: 0 0 15px 1.875%; } }
+  @media screen and (max-width: 600px) {
+    card-sneaker-image {
+      width: 95%;
+      margin: 0 0 15px 2.5%; } }
+  @media screen and (max-width: 440px) {
+    card-sneaker-image {
+      width: 93.18182%;
+      margin: 0 0 15px 3.40909%; } }
+
+card-sneaker-details {
+  display: block;
+  margin: 15px;
+  width: 400px;
+  padding: 10px;
+  overflow: auto;
+  float: left; }
+  @media screen and (max-width: 1800px) {
+    card-sneaker-details {
+      width: 41.66667%;
+      margin: 0 0 15px 0.83333%; } }
+  @media screen and (max-width: 1500px) {
+    card-sneaker-details {
+      width: 40.25%;
+      margin: 0 0 15px 1%; } }
+  @media screen and (max-width: 1250px) {
+    card-sneaker-details {
+      width: 38.32%;
+      margin: 0 0 15px 1.2%; } }
+  @media screen and (max-width: 1000px) {
+    card-sneaker-details {
+      width: 35.4375%;
+      margin: 0 0 15px 1.5%; } }
+  @media screen and (max-width: 800px) {
+    card-sneaker-details {
+      width: 96.25%;
+      margin: 0 0 15px 1.875%; } }
+  @media screen and (max-width: 600px) {
+    card-sneaker-details {
+      width: 95%;
+      margin: 0 0 15px 2.5%; } }
+  @media screen and (max-width: 440px) {
+    card-sneaker-details {
+      width: 93.18182%;
+      margin: 0 0 15px 3.40909%; } }
+
 h1 {
   margin: 10px 0 10px 15px;
   font-size: 20px;
   font-weight: 300; }
+  @media screen and (max-width: 600px) {
+    h1 {
+      font-size: 16px; } }
   h1 .sneaker {
     text-align: center; }
   h1 a {
@@ -155,7 +231,13 @@ h1 {
   h1 #filterString a:hover, h1 #searchString a:hover {
     text-decoration: line-through; }
 
-#headerBar a {
+header {
+  font-size: 20px; }
+  @media screen and (max-width: 600px) {
+    header {
+      font-size: 16px; } }
+
+#headerBar a, #headerBarStandalone a {
   color: #FFFFFF;
   text-decoration: none; }
 
@@ -264,23 +346,45 @@ nav-searchbar {
   margin: 0 10px 0 10px;
   float: right; }
 
-#backText2 {
+#backText1 {
   display: none; }
+  @media screen and (max-width: 600px) {
+    #backText1 {
+      display: inline; } }
+
+#backText2 {
+  display: inline; }
+  @media screen and (max-width: 600px) {
+    #backText2 {
+      display: none; } }
 
 #nextText {
-  display: none;
+  display: inline;
   line-height: 24px; }
+  @media screen and (max-width: 800px) {
+    #nextText {
+      display: none; } }
 
 #nameText {
-  display: none;
+  display: inline;
   line-height: 24px; }
+  @media screen and (max-width: 600px) {
+    #nameText {
+      display: none; } }
 
 #idText {
-  display: none; }
+  display: inline; }
+  @media screen and (max-width: 1000px) {
+    #idText {
+      display: none; } }
 
 #sneaker {
-  margin: 60px 0 0 0;
+  display: block;
+  margin-top: 68px;
   height: 1000px; }
+  @media screen and (max-width: 600px) {
+    #sneaker {
+      margin-top: 45px; } }
 
 #sneakerImage {
   margin: 0 2.666666666% 0 2.666666666%; }
@@ -300,12 +404,6 @@ nav-searchbar {
 
 #sneaker li {
   margin-top: 10px; }
-
-#sneakerDetails {
-  background-color: white;
-  margin: 10px 2.666666666% 0 2.666666666%;
-  padding: 10px;
-  overflow: auto; }
 
 #sneakerDetails p {
   margin-bottom: 10px; }

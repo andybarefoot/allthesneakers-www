@@ -77,6 +77,7 @@ var order = getUrlParameter('order');
 // ensure document is loaded before attempting any jQuery
 $(function(){
 	showIntro=1;
+	adjustHeader();
 //	$("nav-searchbar").css( "display", "none" );
 	// resize intro on window resize
 	$(window).resize(function(){
@@ -98,7 +99,6 @@ $(function(){
 		$("#searchImg").attr("src","/images/search-on.png");
 	}
 	$("#searchString").html(searchStr);
-	adjustHeader();
 	// add toggle functionality to filter icon
 	$("#filterImg").click(function(){
 		$("nav-filters").slideToggle();
@@ -147,7 +147,7 @@ function getUrlParameter(sParam)
 
 // adjusts y value of grid-products as header changes height 
 function adjustHeader(){
-	var headerHeight = 40 + $('nav').height();
+	var headerHeight = 35 + $('nav').height();
 	$('grid-products').css({'margin-top': headerHeight});
 }
 

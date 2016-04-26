@@ -90,12 +90,15 @@ $related=getData($sqlQueryRelated);
 		
 		// register custom elements
 		var cardShoe = document.registerElement('card-shoe');
+		var cardSneakerDetails = document.registerElement('card-sneaker-details');
+		var cardSneakerImage = document.registerElement('card-sneaker-image');
 
 		var prevID=false;
 		var nextID=false;
 
 		// ensure document is loaded before attempting any jQuery
 		$(function(){
+			adjustHeader();
 			thisID = "<? echo $sneakerID; ?>";
 //			console.log(localStorage.productsList);
 			idArray = localStorage.productsList.split("/");
@@ -153,6 +156,10 @@ $related=getData($sqlQueryRelated);
 			});
 
 		});
+		function adjustHeader(){
+			var headerHeight = 35 + $('nav').height();
+			$('#sneaker').css({'margin-top': headerHeight});
+		}
 		function updateNextPrevNav(prevID,nextID){
 			$('body').keydown(function(e) {
 //				console.log(e.keyCode);
@@ -187,24 +194,29 @@ $related=getData($sqlQueryRelated);
 </head>
 <body>
 <header>
-	<div id="headerBar">
+	<nav id="headerBar">
 		<div id="nextShoe"><a id="goNext" href="#">Next &gt;&gt;</a></div>
 		<div id="prevShoe"><a id="goPrev" href="#">&lt;&lt; Previous</a><span id="backText2">&nbsp;&nbsp;&nbsp;&nbsp;<a href="/">Back</a></span></div>
-		<a href="/"><img class="logo" src="/images/all-the-sneakers.png" /></a><h1 class="sneaker"><span id="backText1"><a href="/">Back</a></span><span id="nameText"><? echo $sneakerName; ?> </span><span id="idText">(<? echo $sneakerLocalID; ?>)</span></h1>
-	</div>
-	<div id="headerBarStandalone">
+		<a href="/"><img id="logo" src="/images/all-the-sneakers.png" /></a>
 		<h1>
-			<div id="nextShoe"><a href="/">All The Sneakers ></a></div>
-			<a href="/"><img class="logo" src="/images/all-the-sneakers.png" /></a><span id="nameText"><? echo $sneakerName; ?> </span><span id="idText">(<? echo $sneakerLocalID; ?>)</span>&nbsp;
+			<span id="backText1"><a href="/">Back</a></span>
+			<span id="nameText"><? echo $sneakerName; ?> </span>
+			<span id="idText">(<? echo $sneakerLocalID; ?>)</span>
 		</h1>
-	</div>
+	</nav>
+	<nav id="headerBarStandalone">
+		<div id="nextShoe"><a href="/">All The Sneakers ></a></div>
+		<a href="/"><img id="logo" src="/images/all-the-sneakers.png" /></a>
+		<h1>
+			<span id="nameText"><? echo $sneakerName; ?> </span><span id="idText">(<? echo $sneakerLocalID; ?>)</span>&nbsp;
+		</h1>
+	</nav>
 </header>
-
 <div id="sneaker">
-	<div id="sneakerImage">
+	<card-sneaker-image>
 		<img alt="<? echo $sneakerBrand; ?>: <? echo preg_replace("/[^A-Za-z0-9 ]/", '', $sneakerName); ?> (<? echo $sneakerLocalID; ?>)" src="<? echo $sneakerImage; ?>" />
-	</div>
-	<div id="sneakerDetails">
+	</card-sneaker-image>
+	<card-sneaker-details>
 		<h2><? echo $sneakerName; ?></h2>
 		<h3><? echo $sneakerBrand; ?>: <? echo $sneakerLocalID; ?></h3>
 <?
@@ -258,7 +270,7 @@ echo "</p>";
 ?>
 			
 		</ul>
-	</div>
+	</card-sneaker-details>
 	<div id="relatedSneakers">
 		<h4>More sneakers</h4>
 <?

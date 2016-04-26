@@ -48,7 +48,10 @@ header {
 
 grid-products {
 	display: block;
-    margin-top: 60px;
+    margin-top: 68px;
+   	@media screen and (max-width: 600px){
+	    margin: 45px 0 0 0;
+	}	
 }
 
 card-intro{
@@ -171,4 +174,85 @@ card-shoe{
 	margin: $maxColumnGutter;
 	padding: 10px;
 }
+
+card-sneaker-image{
+	display: block;
+	float: left;
+	@extend .shadow;
+	@extend .lowlight;
+	margin: $maxColumnGutter;
+	@media screen and (max-width: 1800px){	
+		width: get-column-width(7, 4, 1800px);
+		margin: 0 0 15px get-gutter-width(1800px);
+	}	
+	@media screen and (max-width: 1500px){	
+		width: get-column-width(6, 3.5, 1500px);
+		margin: 0 0 15px get-gutter-width(1500px);
+	}	
+	@media screen and (max-width: 1250px){	
+		width: get-column-width(5, 3, 1250px);
+		margin: 0 0 15px get-gutter-width(1250px);
+	}	
+	@media screen and (max-width: 1000px){	
+		width: get-column-width(4, 2.5, 1000px);
+		margin: 0 0 15px get-gutter-width(1000px);
+	}	
+	@media screen and (max-width: 800px){	
+		float: none;
+		width: get-column-width(3, 3, 800px);
+		margin: 0 0 15px get-gutter-width(800px);
+	}	
+	@media screen and (max-width: 600px){	
+		width: get-column-width(3, 3, 600px);
+		margin: 0 0 15px get-gutter-width(600px);
+	}	
+	@media screen and (max-width: 440px){	
+		width: get-column-width(2, 2, 440px);
+		margin: 0 0 15px get-gutter-width(440px);
+	}	
+}
+
+card-sneaker-details{
+	display: block;
+	@extend .shadow;
+	@extend .lowlight;
+	margin: $maxColumnGutter;
+	width: 400px;
+	padding: 10px;
+	overflow: auto;
+	float: left;
+	@media screen and (max-width: 1800px){	
+		width: get-column-width(7, 3, 1800px);
+		margin: 0 0 15px get-gutter-width(1800px);
+	}	
+	@media screen and (max-width: 1500px){	
+		width: get-column-width(6, 2.5, 1500px);
+		margin: 0 0 15px get-gutter-width(1500px);
+	}	
+	@media screen and (max-width: 1250px){	
+		width: get-column-width(5, 2, 1250px);
+		margin: 0 0 15px get-gutter-width(1250px);
+	}	
+	@media screen and (max-width: 1000px){	
+		width: get-column-width(4, 1.5, 1000px);
+		margin: 0 0 15px get-gutter-width(1000px);
+	}	
+	@media screen and (max-width: 800px){	
+		width: get-column-width(3, 3, 800px);
+		margin: 0 0 15px get-gutter-width(800px);
+	}	
+	@media screen and (max-width: 600px){	
+		width: get-column-width(3, 3, 600px);
+		margin: 0 0 15px get-gutter-width(600px);
+	}	
+	@media screen and (max-width: 440px){	
+		width: get-column-width(2, 2, 440px);
+		margin: 0 0 15px get-gutter-width(440px);
+	}	
+}
+
+
+
+
+
 
