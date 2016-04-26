@@ -168,6 +168,8 @@ $related=getData($sqlQueryRelated);
 					nextSneaker();
 				}
 			});
+		    document.getElementById('headerBarStandalone').style.display = 'none';
+		    document.getElementById('headerBar').style.display = 'block';
 		}
 		function removeNextPrevNav(){
 		    document.getElementById('headerBarStandalone').style.display = 'block';
