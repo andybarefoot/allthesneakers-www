@@ -14,15 +14,28 @@ $maxColumnGutter: 15px;
 	box-shadow: 0 0 10px rgba(0,0,0,0.27);
 }
 
+.lowlight{
+	color: $contentTextColor;
+	background-color: $contentColor;
+}
+
 .highlight{
 	color: $highlightTextColor;
 	background-color: $highlightColor;
 }
 
+body{
+	margin: 0;
+	font-family: $primaryFont;
+	font-weight: 300;
+	background-color: #FFFFFF;
+	color: #333333;
+    background-image:url('/images/backgrounds/tread.png');
+}
 
-
-
-
+img {
+	max-width: 100%;
+}
 
 header {
 	@extend .shadow;
@@ -33,12 +46,17 @@ header {
     bottom: auto;
 }
 
+grid-products {
+	display: block;
+    margin-top: 60px;
+}
+
 card-intro{
 	@extend .shadow;
 	@extend .highlight;
 	float: left;
 	width: 492px;
-	margin: 0 0 20px 20px;
+	margin: 0 0 $maxColumnGutter $maxColumnGutter;
 	padding: 20px;
 	@media screen and (max-width: 1800px){	
 		width: get-column-width(7, 3, 1800px);
@@ -80,12 +98,12 @@ card-intro{
 }
 
 card-shoe{
-	box-shadow: 0 0 10px rgba(0,0,0,0.27);
-	background-color: white;
+	@extend .shadow;
+	@extend .lowlight;
 	float: left;
 	font-size: 12px;
 	width: 236px;
-	margin: 0 0 20px 20px;
+	margin: 0 0 $maxColumnGutter $maxColumnGutter;
 	.shoeName{
 		color: #666666;
 	}
@@ -138,34 +156,19 @@ card-shoe{
 #infscr-loading{
 	@extend card-shoe;
 	div{
-		width: 90%;
 		height: 52px;
-		margin: auto;
-		background-color: white;
 	}
 }
 
-
-
-
-#nav{
-	font-size: 20px;
-	@extend .highlight;
+#relatedSneakers {
+	clear: both;
 }
 
-#nav-searchbar {
-	display: none;
-    background-color: black;
-    padding: 20px;
-    width:100%;
-	text-align: center;
-}
-
-#headerBarStandalone {
-	font-size: 20px;
-	@extend .highlight;
-    background-repeat:no-repeat;
-    background-position:15px 0px;
-	display: none;
+#relatedSneakers h4{
+	display: block;
+	@extend .shadow;
+	@extend .lowlight;
+	margin: $maxColumnGutter;
+	padding: 10px;
 }
 

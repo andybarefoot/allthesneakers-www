@@ -55,7 +55,7 @@ $related=getData($sqlQueryRelated);
 	<script type="text/javascript" src="/common/jquery/jquery-1.8.2.min.js"></script>
 	<script type="text/javascript" src="/common/jquery/hammer.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="/styles/reset.css">
-	<link rel="stylesheet" type="text/css" href="/styles/general.css" />
+	<link rel="stylesheet" type="text/css" href="/styles/sneaker.css" />
 <!--	<link href='http://fonts.googleapis.com/css?family=Roboto+Slab:300' rel='stylesheet' type='text/css'> -->
 	<link href='https://fonts.googleapis.com/css?family=Lato:400,100,300' rel='stylesheet' type='text/css'>
 
@@ -88,6 +88,9 @@ $related=getData($sqlQueryRelated);
 		ga('send', 'pageview');
 		// end GA
 		
+		// register custom elements
+		var cardShoe = document.registerElement('card-shoe');
+
 		var prevID=false;
 		var nextID=false;
 
@@ -181,7 +184,7 @@ $related=getData($sqlQueryRelated);
 	</script>
 </head>
 <body>
-<div class="header">
+<header>
 	<div id="headerBar">
 		<div id="nextShoe"><a id="goNext" href="#">Next &gt;&gt;</a></div>
 		<div id="prevShoe"><a id="goPrev" href="#">&lt;&lt; Previous</a><span id="backText2">&nbsp;&nbsp;&nbsp;&nbsp;<a href="/">Back</a></span></div>
@@ -193,7 +196,8 @@ $related=getData($sqlQueryRelated);
 			<a href="/"><img class="logo" src="/images/all-the-sneakers.png" /></a><span id="nameText"><? echo $sneakerName; ?> </span><span id="idText">(<? echo $sneakerLocalID; ?>)</span>&nbsp;
 		</h1>
 	</div>
-</div>
+</header>
+
 <div id="sneaker">
 	<div id="sneakerImage">
 		<img alt="<? echo $sneakerBrand; ?>: <? echo preg_replace("/[^A-Za-z0-9 ]/", '', $sneakerName); ?> (<? echo $sneakerLocalID; ?>)" src="<? echo $sneakerImage; ?>" />
@@ -264,12 +268,12 @@ for($i=0;$i<count($related);$i++){
 	while(strlen($sneakerName)>50){
 		$sneakerName=substr($sneakerName,0,strrpos($sneakerName,' ')).'...';
 	}
-	echo '<div class="shoe related'.$i.'" id="'.$related[$i]['shoeID'].'">';
+	echo '<card-shoe class="related'.$i.'" id="'.$related[$i]['shoeID'].'">';
 	echo '<a class="fancybox fancybox.ajax" rel="group" href="/sneaker/'.$related[$i]['shoeID'].'/'.$urlBrandName.'/'.$urlProductName.'"><img alt="'.$related[$i]['brandName'].': '.preg_replace("/[^A-Za-z0-9 ]/", '', $sneakerName).'" src="http://www.allthesneakers.com'.$related[$i]['shoeThumb'].'"></a>';
 	echo '<div class="shoeDetails"><span class="shoeName">'.$sneakerName.'</span><br/>';
 	echo '<span class="shoeBrand">'.$related[$i]['brandName'].'</span>';
 	echo '<span class="shoePrice">$'.$related[$i]['productPrice'].'</span>';
-	echo '</div></div>';
+	echo '</div></card-shoe>';
 }
 ?>		
 	</div>

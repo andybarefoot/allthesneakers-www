@@ -1,0 +1,78 @@
+#nextShoe{
+	margin: 0 10px 0 10px;
+	float: right;
+}
+#prevShoe{
+	margin: 0 10px 0 10px;
+	float: right;
+}
+#backText2 {
+	display: none;	
+}
+#nextText {
+	display: none;	
+	line-height: 24px;		
+}
+#nameText {
+	display: none;
+	line-height: 24px;		
+}
+#idText {
+	display: none;	
+}
+#sneaker {
+    margin: 60px 0 0 0;
+	height: 1000px;
+}
+
+#sneakerImage {
+    margin: 0 2.666666666% 0 2.666666666%;
+}
+
+#sneakerImage img {
+	@extend .shadow;
+}
+
+#sneaker .buyLink {
+	display: block;
+	width: 200px;
+	background: #000000;
+	padding: 10px;
+	text-align: left;
+	color: white;
+	text-decoration: none;
+}
+#sneaker ul{
+	list-style-type: none;
+	float: right;
+}
+#sneaker li{
+	margin-top: 10px;
+}
+#sneakerDetails{
+	@extend .shadow;
+	background-color: white;
+	margin: 10px 2.666666666% 0 2.666666666%;
+	padding: 10px;
+	overflow: auto;
+}
+#sneakerDetails p{
+	margin-bottom: 10px;
+}
+
+@media screen and (max-width: 1000px){	
+	.related8, .related9{
+	    display: none;
+	}
+}	
+@media screen and (max-width: 800px){	
+	.related8{
+	    display: block;
+	}
+}	
+@media screen and (max-width: 440px){	
+	.related9{
+	    display: block;
+	}
+}	
+

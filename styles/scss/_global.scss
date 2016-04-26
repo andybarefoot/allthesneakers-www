@@ -1,0 +1,20 @@
+/* apply a natural box layout model to all elements, but allowing components to change */
+
+html {
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+/* define reused colours */
+
+$highlightColor: #000;
+$highlightTextColor: #fff;
+$contentColor: #fff;
+$contentTextColor: #333;
+
+/* define site fonts */
+$primaryFont: 'Lato', serif;
+
