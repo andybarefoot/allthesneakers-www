@@ -294,12 +294,14 @@ for($i=0;$i<count($related);$i++){
 	</div>
 	<div id="hiddenLinks">
 <?
+/*	
 	for($i=0;$i<count($shoes);$i++){
 		if($shoes[$i]['productLive']==1){
 			echo '<a href="'.$shoes[$i]['productURL'].'" target="_blank"><img src="images/trans.png" width="100" height="10"/></a>';
 			$isAvailable=true;
 		}
 	}
+*/
 ?>
 	</div>
 </div>
