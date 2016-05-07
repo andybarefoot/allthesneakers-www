@@ -3,7 +3,10 @@ require_once '../../includes/db-shoes.php';
 require_once '../../includes/dbactions.php';
 require_once '../../includes/commonFunctions.php';
 
-createCroppedImage('../images/products/2/downloaded/13527.jpg',1000,1000,'../images/products/0/1000sq/18092.jpg','middle', 'f5f5f5');
+$brand=intval($_GET["b"]);
+if($brand<1)$brand=0;
+
+//createCroppedImage('../images/products/2/downloaded/13527.jpg',1000,1000,'../images/products/0/1000sq/18092.jpg','middle', 'f5f5f5');
 
 function listFolderFiles($dir){
     $ffs = scandir($dir);
@@ -41,6 +44,10 @@ function listFolderFiles($dir){
     echo '</ol>';
 }
 
-listFolderFiles('../images/products/');
+if($brand==0){
+	listFolderFiles('../images/products/');
+} else {
+	listFolderFiles('../images/products/'.$brand.'/');
+}
 
 ?>
