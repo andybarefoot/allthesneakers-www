@@ -11,6 +11,7 @@ if($brand<1)$brand=0;
 function listFolderFiles($dir){
     $ffs = scandir($dir);
     echo '<ol>';
+    $imageCount=0;
     foreach($ffs as $ff){
         if($ff != '.' && $ff != '..'){
             echo '<li>'.$dir.'/'.$ff;
@@ -28,6 +29,7 @@ function listFolderFiles($dir){
 	          	if(!file_exists($destination.'/'.$ff)){
 					createCroppedImage($dir.'/'.$ff,1000,1000,$destination.'/'.$ff,'middle', 'f5f5f5');
 	            	echo ' - MAKE 1000 sq';
+                    $imageCount++;
             	}
             	$destination = str_replace("downloaded", "250sq", $dir);
             	if(!file_exists($destination)){
@@ -36,9 +38,13 @@ function listFolderFiles($dir){
 	          	if(!file_exists($destination.'/'.$ff)){
 					createCroppedImage($dir.'/'.$ff,250,250,$destination.'/'.$ff,'middle', 'f5f5f5');
 	            	echo ' - MAKE 250 sq';
+                    $imageCount++;
             	}
             }
             echo '</li>';
+        }
+        if($imageCount>10){
+            break;
         }
     }
     echo '</ol>';
