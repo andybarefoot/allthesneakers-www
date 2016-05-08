@@ -43,7 +43,7 @@ function listFolderFiles($dir){
             }
             echo '</li>';
         }
-        if($imageCount>500){
+        if($imageCount>250){
             break;
         }
     }
