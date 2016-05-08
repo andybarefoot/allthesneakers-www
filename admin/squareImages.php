@@ -1,7 +1,5 @@
 <?php
 
-ini_set('memory_limit','8M');
-
 require_once '../../includes/db-shoes.php';
 require_once '../../includes/dbactions.php';
 require_once '../../includes/commonFunctions.php';
