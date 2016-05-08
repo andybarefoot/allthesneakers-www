@@ -53,7 +53,7 @@ function listFolderFiles($dir){
 if($brand==0){
 	listFolderFiles('../images/products/');
 } else {
-	listFolderFiles('../images/products/'.$brand.'/');
+	listFolderFiles('../images/products/'.$brand.'/downloaded/');
 }
 
 ?>
