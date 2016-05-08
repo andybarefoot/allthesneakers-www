@@ -3,11 +3,20 @@ require_once '../../includes/db-shoes.php';
 require_once '../../includes/dbactions.php';
 require_once '../../includes/commonFunctions.php';
 
+
+
 $brand=intval($_GET["b"]);
 if($brand<1)$brand=0;
 
 //createCroppedImage('../images/products/2/downloaded/13527.jpg',1000,1000,'../images/products/0/1000sq/18092.jpg','middle', 'f5f5f5');
-
+?>
+<script>
+setInterval(function() {
+                  window.location.reload();
+ //                 alert("reload");
+}, 300000); 
+</script>
+<?php
 function listFolderFiles($dir){
     $ffs = scandir($dir);
     echo '<ol>';
