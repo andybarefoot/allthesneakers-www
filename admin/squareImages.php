@@ -15,7 +15,7 @@ if($brand<1)$brand=0;
 setInterval(function() {
                   window.location.reload();
  //                 alert("reload");
-}, 300000); 
+}, 3000); 
 </script>
 <?php
 function listFolderFiles($dir){
