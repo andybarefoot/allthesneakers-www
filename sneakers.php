@@ -1,4 +1,5 @@
 <?php
+
 require_once '../includes/db-shoes.php';
 require_once '../includes/dbactions.php';
 
@@ -179,7 +180,7 @@ if($introNo==1){
 	</form>
 	<div id="introLinks">
 		<h3>Popular Models:</h3>
-<?
+<?php
 $thisID=0;
 foreach ($models as $model) {
 	$modelID=$model['modelID'];
@@ -199,7 +200,7 @@ foreach ($models as $model) {
 ?>
 	</div>
 </card-intro>
-<?
+<?php
 }
 
 

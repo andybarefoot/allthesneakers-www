@@ -111,6 +111,38 @@ if($thisSpiderFile){
 	echo 'NO SPIDER CHOSEN';
 }
 
+// ALL PRODUCTS SPIDER
+if(true){
+	echo 'ALL PRODUCTS: NIKE<br/><br/>';
+	// INCLUDE SITE SPECIFIC FILE BASED ON REQUIRED SPIDER
+	$fileLocStr = 'cron/allProducts-nike.php';
+	include_once $fileLocStr;
+	// RUN THE SPIDER
+	$message .= "Pages searched:<br/>";
+	// Spidering the specified URLs
+	while(count($spiderPagesUrls)>0){
+		findProducts();
+	}
+	$message .= "<br/>Total products: ".$productCount."<br/>";
+	// Removing duplicates from Product URL array and reindex
+	$productPagesUrls = array_values(array_unique($productPagesUrls));
+	$totalUrls = count($productPagesUrls);
+	$message .= "Unique products: ".$totalUrls."<br/>";
+	// Define subset to process this time
+	$sliceStart=$sInt;
+	$sliceEnd=$nInt;
+	$productPagesUrls = array_slice($productPagesUrls, $sliceStart, $sliceEnd);
+	$message .= "Spidering products: ".$sliceStart."-".($sliceEnd+$sliceStart)."<br/>";
+	// Process pages
+	while(count($productPagesUrls)>0){
+		processPages();
+	}
+
+	//REPORTING
+	// Print results to browser
+	echo $message;
+}
+
 
 
 ?>

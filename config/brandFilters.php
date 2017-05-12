@@ -11,7 +11,7 @@ $brands=getData($sqlQuery);
 ?>
 
 <ul>Brand (<a id="brandToggleLink" href="javascript:toggleBrandFilters();">more</a>)
-<?
+<?php
 foreach ($brands as $brand) {
 	$brandCount=$brand['brandCount'];
 	$brandID=$brand['brandID'];

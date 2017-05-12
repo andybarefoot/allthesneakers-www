@@ -9,7 +9,7 @@ $models=getData($sqlQuery);
 ?>
 
 <ul>Model
-<?
+<?php
 $thisID=0;
 foreach ($models as $model) {
 	$modelID=$model['modelID'];

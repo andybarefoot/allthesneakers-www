@@ -1,23 +1,21 @@
 <?php
 
-// site: http://www.nike.com/us/en_us/
-$site = "5";
+include_once '../../../includes/curlFunc.php';
 
-// Declaring arrays
-// the listing pages that might contain links to products
-$spiderPagesUrls = array(
-	"http://store.nike.com/html-services/gridwallData?country=US&lang_locale=en_US&gridwallPath=mens-lifestyle-shoes/7puZoneZoi3&pn=1",
-	"http://store.nike.com/html-services/gridwallData?country=US&lang_locale=en_US&gridwallPath=mens-lifestyle-shoes/7puZoneZoi3&pn=2",
-	"http://store.nike.com/html-services/gridwallData?country=US&lang_locale=en_US&gridwallPath=mens-lifestyle-shoes/7puZoneZoi3&pn=3",
-	"http://store.nike.com/html-services/gridwallData?country=US&lang_locale=en_US&gridwallPath=mens-lifestyle-shoes/7puZoneZoi3&pn=4",
-	"http://store.nike.com/html-services/gridwallData?country=US&lang_locale=en_US&gridwallPath=mens-lifestyle-shoes/7puZoneZoi3&pn=5",
-	"http://store.nike.com/html-services/gridwallData?country=US&lang_locale=en_US&gridwallPath=womens-lifestyle-shoes/7ptZoneZoi3&pn=1",
-	"http://store.nike.com/html-services/gridwallData?country=US&lang_locale=en_US&gridwallPath=womens-lifestyle-shoes/7ptZoneZoi3&pn=2",
-	"http://store.nike.com/html-services/gridwallData?country=US&lang_locale=en_US&gridwallPath=womens-lifestyle-shoes/7ptZoneZoi3&pn=3",
-	"http://store.nike.com/html-services/gridwallData?country=US&lang_locale=en_US&gridwallPath=womens-lifestyle-shoes/7ptZoneZoi3&pn=4",
-	"http://store.nike.com/html-services/gridwallData?country=US&lang_locale=en_US&gridwallPath=womens-lifestyle-shoes/7ptZoneZoi3&pn=5",
-	"http://store.nike.com/html-services/gridwallData?gridwallPath=mens-jordan-shoes%2F7puZofqZoi3&country=US&lang_locale=en_US"
-	);
+$currentPage = 1;
+$pageCount = 1;
+
+while ($currentPage <= $pageCount) {
+	$pageURL = "http://store.nike.com/html-services/gridwallData?country=US&lang_locale=en_US&pn=".$currentPage;
+	print "Finding from:".$pageURL."<br>";
+	$thisPageSrc = curlGet($pageURL);
+	echo $thisPageSrc;
+
+//	$obj = json_decode($thisPageSrc);
+//	print_r($obj);
+
+	$currentPage++;
+}
 
 //custom function for finding products on this site
 function findProducts(){
@@ -97,7 +95,7 @@ function processPages(){
 	}
 	$productPageXpath = NULL;	// Nulling $booksPageXPath object
 	$processedPagesUrls[] = $thisPageUrl;	// Build results page URL and add to $resultsPages array
-	saveProduct($productArray);
+//	saveProduct($productArray);
 	showProduct($productArray);
 	unset($productArray);
 }

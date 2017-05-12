@@ -13,6 +13,13 @@ $spiderPagesUrls = array(
 	"http://www.adidas.com/us/originals-shoes?sz=120&start=480"
 	);
 
+// Define image settings
+$imageSettings = array(
+	"e3e3e3",
+	"bottom"
+	);
+
+
 //custom function for finding products on this site
 function findProducts(){
 	global $message;

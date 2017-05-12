@@ -248,7 +248,7 @@ function loadSneakers(pageID){
 
 //change height of intro
 function introHeight() {
-	shoeImgHeight=0.8*$('grid-products').children('card-shoe').first().width();
+	shoeImgHeight=$('grid-products').children('card-shoe').first().width();
 	shoeDetailsHeight=$('.shoeDetails').first().height();
 	shoeCardGutter=parseInt($('grid-products').children('card-shoe').css("marginBottom").replace('px', ''));
 	introCardPadding=parseInt($('card-intro').css("paddingTop").replace('px','')) + parseInt($('card-intro').css("paddingBottom").replace('px',''));

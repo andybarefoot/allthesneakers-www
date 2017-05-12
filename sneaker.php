@@ -1,10 +1,18 @@
-<?
+<?php
 $actual_link1 = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'];
 $actual_link2 = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 $actual_link3 =  "//$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 
 $sneakerID=intval($_GET["id"]);
-
+echo $_SERVER['HTTP_HOST'].'---'.$_SERVER['PHP_SELF'].'---'.$_SERVER[REQUEST_URI];
+if($sneakerID==0){
+	$uriArray =  explode('/',$_SERVER[REQUEST_URI]);
+	for($i=0; $i<count($uriArray); $i++){
+		if($uriArray[$i]=='sneaker'){
+			$sneakerID=intval($uriArray[$i+1]);
+		}
+	}
+}
 require_once '../includes/db-shoes.php';
 require_once '../includes/dbactions.php';
 
@@ -51,7 +59,7 @@ $related=getData($sqlQueryRelated);
 	<meta name="viewport" content="initial-scale=1.0, width=device-width, minimal-ui" />		
 	<meta name="apple-mobile-web-app-capable" content="yes" />
 	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
-	<title>All The Sneakers:  <? echo $sneakerName; ?> (<? echo $sneakerBrand; ?>: <? echo $sneakerLocalID; ?>)</title>
+	<title>All The Sneakers:  <?php echo $sneakerName; ?> (<?php echo $sneakerBrand; ?>: <?php echo $sneakerLocalID; ?>)</title>
 	<script type="text/javascript" src="/js/webcomponents.js"></script>
 	<script type="text/javascript" src="/common/jquery/jquery-1.8.2.min.js"></script>
 	<script type="text/javascript" src="/common/jquery/hammer.min.js"></script>
@@ -100,7 +108,7 @@ $related=getData($sqlQueryRelated);
 		// ensure document is loaded before attempting any jQuery
 		$(function(){
 			adjustHeader();
-			thisID = "<? echo $sneakerID; ?>";
+			thisID = "<?php echo $sneakerID; ?>";
 //			console.log(localStorage.productsList);
 			idArray = localStorage.productsList.split("/");
 			idArray.pop();
@@ -201,26 +209,26 @@ $related=getData($sqlQueryRelated);
 		<a href="/"><img id="logo" src="/images/all-the-sneakers.png" /></a>
 		<h1>
 			<span id="backText1"><a href="/">Back</a></span>
-			<span id="nameText"><? echo $sneakerName; ?> </span>
-			<span id="idText">(<? echo $sneakerLocalID; ?>)</span>
+			<span id="nameText"><?php echo $sneakerName; ?> </span>
+			<span id="idText">(<?php echo $sneakerLocalID; ?>)</span>
 		</h1>
 	</nav>
 	<nav id="headerBarStandalone">
 		<div id="nextShoe"><a href="/">All The Sneakers ></a></div>
 		<a href="/"><img id="logo" src="/images/all-the-sneakers.png" /></a>
 		<h1>
-			<span id="nameText"><? echo $sneakerName; ?> </span><span id="idText">(<? echo $sneakerLocalID; ?>)</span>&nbsp;
+			<span id="nameText"><?php echo $sneakerName; ?> </span><span id="idText">(<?php echo $sneakerLocalID; ?>)</span>&nbsp;
 		</h1>
 	</nav>
 </header>
 <div id="sneaker">
 	<card-sneaker-image>
-		<img alt="<? echo $sneakerBrand; ?>: <? echo preg_replace("/[^A-Za-z0-9 ]/", '', $sneakerName); ?> (<? echo $sneakerLocalID; ?>)" src="<? echo $sneakerImage; ?>" />
+		<img alt="<?php echo $sneakerBrand; ?>: <?php echo preg_replace("/[^A-Za-z0-9 ]/", '', $sneakerName); ?> (<?php echo $sneakerLocalID; ?>)" src="<?php echo $sneakerImage; ?>" />
 	</card-sneaker-image>
 	<card-sneaker-details>
-		<h2><? echo $sneakerName; ?></h2>
-		<h3><? echo $sneakerBrand; ?>: <? echo $sneakerLocalID; ?></h3>
-<?
+		<h2><?php echo $sneakerName; ?></h2>
+		<h3><?php echo $sneakerBrand; ?>: <?php echo $sneakerLocalID; ?></h3>
+<?php
 
 $isAvailable=false;
 $descPhotoStr="";
@@ -266,7 +274,7 @@ if(strlen($sneakerDesc)>50){
 echo "</p>";
 ?>
 		<ul>
-<?
+<?php
 	echo $linksStr;
 ?>
 			
@@ -274,7 +282,7 @@ echo "</p>";
 	</card-sneaker-details>
 	<div id="relatedSneakers">
 		<h4>More sneakers</h4>
-<?
+<?php
 // echo $sqlQuery; 
 for($i=0;$i<count($related);$i++){
 	$urlProductName = preg_replace('/^-+|-+$/', '', strtolower(preg_replace('/[^a-zA-Z0-9]+/', '-', $related[$i]['shoeName'])));
@@ -293,7 +301,7 @@ for($i=0;$i<count($related);$i++){
 ?>		
 	</div>
 	<div id="hiddenLinks">
-<?
+<?php
 /*	
 	for($i=0;$i<count($shoes);$i++){
 		if($shoes[$i]['productLive']==1){
